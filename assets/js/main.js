@@ -204,7 +204,7 @@
   }
 
   /* ---------- Locații ---------- */
-  var PRODUCT_LABELS = { cafea: "Cafea", snacks: "Snacks", bauturi: "Băuturi reci" };
+  var PRODUCT_LABELS = { cafea: "Cafea", irish: "Irish cappuccino", ciocolata: "Ciocolată caldă", snacks: "Snacks", bauturi: "Băuturi reci" };
 
   function locationCard(l, i) {
     return (

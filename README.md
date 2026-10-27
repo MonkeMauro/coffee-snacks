@@ -56,6 +56,5 @@ python3 -m http.server 8000
 
 - [ ] Completează telefonul, WhatsApp-ul, emailul și datele firmei în `config.js`
 - [ ] Pune coordonatele exacte ale celor 3 locații
-- [ ] Verifică ce produse are fiecare aparat Simos (acum: doar cafea)
 - [ ] Înlocuiește produsele exemplu din `products.js` cu produsele reale
 - [ ] Adaugă linkurile reale de Facebook / Instagram

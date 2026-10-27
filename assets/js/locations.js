@@ -6,7 +6,7 @@
  *   address  – adresa
  *   details  – reper (opțional)
  *   type     – ex. „Locație proprie”, „Aparat în magazin”
- *   products – ce găsești: "cafea", "snacks", "bauturi"
+ *   products – ce găsești: "cafea", "irish", "ciocolata", "snacks", "bauturi"
  *   hours    – program de acces
  *   lat, lng – coordonate pentru hartă. Cele de mai jos sunt APROXIMATIVE:
  *              în Google Maps, click dreapta pe locul exact → copiezi cele două numere.
@@ -20,7 +20,7 @@ window.LOCATIONS = [
     address: "Str. Principală nr. 45, Borca, jud. Neamț",
     details: "Centru Borca, la parter – fosta Casa Dornei",
     type: "Locație proprie",
-    products: ["cafea", "snacks", "bauturi"],
+    products: ["cafea", "irish", "ciocolata", "snacks", "bauturi"],
     hours: "Non-stop, 24/7",
     lat: 47.1835,
     lng: 25.7705,
@@ -30,9 +30,9 @@ window.LOCATIONS = [
     name: "Simos Borca",
     city: "Borca",
     address: "Borca, jud. Neamț",
-    details: "Aparat de cafea în magazinul Simos",
+    details: "Aparat de cafea, irish și ciocolată caldă în magazinul Simos",
     type: "Aparat vending",
-    products: ["cafea"],
+    products: ["cafea", "irish", "ciocolata"],
     hours: "În programul magazinului",
     lat: 47.1872,
     lng: 25.7642,
@@ -41,9 +41,9 @@ window.LOCATIONS = [
     name: "Simos Broșteni",
     city: "Broșteni",
     address: "Broșteni, jud. Suceava",
-    details: "Aparat de cafea în magazinul Simos",
+    details: "Aparat de cafea, irish și ciocolată caldă în magazinul Simos",
     type: "Aparat vending",
-    products: ["cafea"],
+    products: ["cafea", "irish", "ciocolata"],
     hours: "În programul magazinului",
     lat: 47.2367,
     lng: 25.6975,
