@@ -11,6 +11,8 @@
  *   lat, lng – coordonate pentru hartă (în Google Maps: click dreapta pe locul exact
  *              → copiezi cele două numere).
  *   mapsUrl  – link Google Maps pentru „Indicații rutiere” (opțional; altfel se folosesc lat/lng)
+ *   price    – prețul afișat (opțional), ex. „Orice băutură: 6 lei”
+ *   image    – poză cu aparatul (opțional), ex. "assets/img/foto/simos-borca.jpg"
  *   own      – true pentru locația proprie non-stop (apare evidențiată)
  *   soon     – true dacă locația nu e încă deschisă
  */
@@ -22,6 +24,7 @@ window.LOCATIONS = [
     details: "Centru Borca, la parter – fosta Casa Dornei",
     type: "Locație proprie",
     products: ["cafea", "irish", "ciocolata", "snacks", "bauturi"],
+    price: "Orice cafea: 5 lei",
     hours: "Non-stop, 24/7",
     lat: 47.1783,
     lng: 25.78861,
@@ -32,7 +35,10 @@ window.LOCATIONS = [
     name: "Simos Borca",
     city: "Borca",
     address: "Borca, jud. Neamț",
-    details: "Aparat de cafea, irish și ciocolată caldă în magazinul Simos",
+    details: "Coffee Corner în magazinul Simos, lângă intrare",
+    price: "Orice băutură: 6 lei",
+    image: "assets/img/foto/simos-borca.jpg",
+    imageAlt: "Aparatul de cafea Coffee Corner din magazinul Simos Borca",
     type: "Aparat vending",
     products: ["cafea", "irish", "ciocolata"],
     hours: "În programul magazinului",

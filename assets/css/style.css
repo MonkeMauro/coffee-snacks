@@ -1014,6 +1014,28 @@ textarea {
   padding: 22px;
 }
 
+.location-card.has-image {
+  padding-top: 0;
+  overflow: hidden;
+}
+
+.location-img {
+  display: block;
+  width: calc(100% + 44px);
+  max-width: none;
+  margin: 0 -22px 18px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.location-price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--lime-dark);
+  margin-bottom: 10px;
+}
+
 .location-card.is-own {
   border: 2px solid var(--lime);
   background: linear-gradient(160deg, #fff, var(--mint));

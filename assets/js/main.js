@@ -212,7 +212,8 @@
 
   function locationCard(l, i) {
     return (
-      '<li class="location-card' + (l.own ? " is-own" : "") + '" data-index="' + i + '">' +
+      '<li class="location-card' + (l.own ? " is-own" : "") + (l.image ? " has-image" : "") + '" data-index="' + i + '">' +
+      (l.image ? '<img class="location-img" src="' + esc(l.image) + '" alt="' + esc(l.imageAlt || l.name) + '" loading="lazy">' : "") +
       '<div class="location-head"><span class="location-type">' + esc(l.type) + "</span>" +
       (l.soon ? '<span class="badge badge-muted">În curând</span>' : /non-stop|24\/7/i.test(l.hours) ? '<span class="badge">24/7</span>' : "") +
       "</div>" +
@@ -220,6 +221,7 @@
       '<p class="location-addr">' + esc(l.address) + "</p>" +
       (l.details ? '<p class="location-details">' + esc(l.details) + "</p>" : "") +
       '<p class="location-hours">' + esc(l.hours) + "</p>" +
+      (l.price ? '<p class="location-price">' + esc(l.price) + "</p>" : "") +
       '<ul class="tags">' +
       (l.products || []).map(function (p) { return "<li>" + esc(PRODUCT_LABELS[p] || p) + "</li>"; }).join("") +
       "</ul>" +
@@ -315,6 +317,7 @@
           "<strong>" + esc(l.name) + "</strong><br>" + esc(l.address) +
           (l.details ? "<br><em>" + esc(l.details) + "</em>" : "") +
           "<br>" + esc(l.hours) +
+          (l.price ? "<br><strong>" + esc(l.price) + "</strong>" : "") +
           '<br><a href="' + esc(directionsUrl(l)) + '" target="_blank" rel="noopener">Indicații rutiere →</a>'
         );
     });
