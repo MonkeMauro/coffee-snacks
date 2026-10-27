@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coffee &amp; Snacks · Cafea de specialitate &amp; snacks 24/7 în Borca</title>
+  <meta name="description" content="Coffee & Snacks – Self Service Station: cafea de specialitate la 5 lei, snacks și băuturi reci, deschis non-stop în centrul Borca. Aparate de vending în Borca și Broșteni.">
+  <meta property="og:title" content="Coffee &amp; Snacks · Cafea de specialitate &amp; snacks 24/7 în Borca">
+  <meta property="og:description" content="Coffee & Snacks – Self Service Station: cafea de specialitate la 5 lei, snacks și băuturi reci, deschis non-stop în centrul Borca. Aparate de vending în Borca și Broșteni.">
+  <meta name="theme-color" content="#0f2418">
+  <meta property="og:image" content="assets/img/foto/hero.jpg">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Sari la conținut</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Meniu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Navigare principală">
+        <ul>
+          <li><a href="index.html" aria-current="page">Acasă</a></li>
+          <li><a href="locatii.html">Locații</a></li>
+          <li><a href="magazin.html">Magazin</a></li>
+          <li><a href="vending.html">Parteneri</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="btn" href="locatii.html">Harta locațiilor</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <span class="eyebrow">Self Service Station · Deschis 24/7</span>
+          <h1>Cafea de specialitate, <span class="hl">zi și noapte</span><span class="script">Aromă care te ține în mișcare!</span></h1>
+          <p class="lead">Espresso, cappuccino, ciocolată caldă, snacks și băuturi reci — într-un spațiu curat și luminos din centrul Borca, deschis non-stop. Intri, alegi, plătești și pleci cu cafeaua în mână.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#meniu">Vezi meniul</a>
+            <a class="btn btn-ghost" href="locatii.html">Harta locațiilor</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Locația non-stop">
+          <span class="open-now">Deschis acum · 24/7</span>
+          <h2>Centru Borca</h2>
+          <p data-config="shop.landmark">La parter – fosta Casa Dornei</p>
+          <p data-config="shop.address"></p>
+          <div style="display:flex;align-items:center;gap:16px;margin-top:18px">
+            <span class="price-circle">5<small>LEI</small></span>
+            <span>Orice cafea<br>de la automat</span>
+          </div>
+          <a class="btn btn-ghost" data-href="map" href="#" target="_blank" rel="noopener">Indicații rutiere</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container overlap" aria-label="De ce Coffee &amp; Snacks">
+      <div class="features">
+        <div class="feature">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16h24l-3 26H15z"/><path d="M10 12h28v4H10z"/><path d="M19 4c-1.5 2 1.5 3.5 0 6M25 4c-1.5 2 1.5 3.5 0 6M31 4c-1.5 2 1.5 3.5 0 6"/></svg>
+          <strong>Cafea de specialitate</strong><span>boabe proaspăt măcinate</span>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 30c2-10 9-16 18-16s16 6 18 16c-4 3-10 4-18 4S10 33 6 30z"/><path d="M17 15l3 18M31 15l-3 18M24 14v20"/></svg>
+          <strong>Snacks de calitate</strong><span>dulce, sărat și băuturi reci</span>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40C12 40 8 30 8 22c8 0 16 4 16 18z"/><path d="M24 40c0-16 8-24 18-26 0 12-6 26-18 26z"/></svg>
+          <strong>Self service</strong><span>rapid și simplu</span>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M24 14v10l7 4"/></svg>
+          <strong>Zi și noapte</strong><span>deschis 24/7, inclusiv de sărbători</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="meniu">
+      <div class="container menu-wrap">
+        <div>
+          <span class="eyebrow" style="color:var(--lime-dark)">Meniu</span>
+          <h2>Orice cafea la doar <span class="hl" style="color:var(--lime-dark)">5 lei</span></h2>
+          <p style="color:var(--muted)">Cafea de specialitate preparată pe loc, din boabe proaspăt măcinate, la aparatul automat.</p>
+          <ul class="menu-list">
+            <li><span class="item">Espresso</span><span class="p">5 lei</span></li>
+            <li><span class="item">Espresso cu lapte</span><span class="p">5 lei</span></li>
+            <li><span class="item">Cafea lungă</span><span class="p">5 lei</span></li>
+            <li><span class="item">Cappuccino</span><span class="p">5 lei</span></li>
+            <li><span class="item">Mokaccino</span><span class="p">5 lei</span></li>
+            <li><span class="item">Latte macchiato</span><span class="p">5 lei</span></li>
+            <li><span class="item">Irish cappuccino</span><span class="p">5 lei</span></li>
+            <li><span class="item">Ciocolată caldă</span><span class="p">5 lei</span></li>
+          </ul>
+          <div class="offer">
+            <span class="price-circle">9.5<small>LEI</small></span>
+            <div>
+              <h3>Ofertă cafea + apă</h3>
+              <p>Orice cafea plus o sticlă de apă. Completează cu ce-ți place:</p>
+            </div>
+          </div>
+          <ul class="extras">
+            <li>Dorești și un corn? <strong>+5 lei</strong></li>
+            <li>Vrei ceva sărat? <strong>+6 lei</strong></li>
+            <li>Vrei ceva dulce? <strong>+5 lei</strong></li>
+          </ul>
+          <p class="notice-soft">În automatul de snacks găsești ciocolată, napolitane, biscuiți, chipsuri, apă, sucuri și energizante — de la 3,50 lei. Plata se face cu bancnote sau card. <strong>Atenție: aparatul de cafea nu dă rest.</strong></p>
+        </div>
+        <div class="photo photo-tall">
+          <img src="assets/img/foto/meniu-cafea.jpg" alt="Aparatul de cafea cu meniul pe ecran: espresso, cappuccino, ciocolată caldă și altele, toate la 5 lei" loading="lazy" width="1050" height="1400">
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cum arată la noi</h2>
+          <p>Un spațiu mic, curat și luminos, cu masă de servit, supraveghere video și acces non-stop.</p>
+        </div>
+        <div class="gallery">
+          <figure class="big"><img src="assets/img/foto/exterior-fata.jpg" alt="Fațada Coffee &amp; Snacks Self Service Station noaptea" loading="lazy"><figcaption>Deschis 24/7 în centrul Borca</figcaption></figure>
+          <figure><img src="assets/img/foto/interior-aparate.jpg" alt="Interiorul cu automatul de snacks și aparatul de cafea" loading="lazy"><figcaption>Cafea &amp; snacks</figcaption></figure>
+          <figure><img src="assets/img/foto/espresso.jpg" alt="Espresso cu cremă, proaspăt preparat" loading="lazy"><figcaption>Espresso proaspăt</figcaption></figure>
+          <figure><img src="assets/img/foto/aparat-snacks.jpg" alt="Automatul cu snacks și băuturi reci" loading="lazy"><figcaption>Snacks &amp; băuturi reci</figcaption></figure>
+          <figure><img src="assets/img/foto/interior-masa.jpg" alt="Masă de servit în interior" loading="lazy"><figcaption>Loc pentru o pauză</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slogan-band">
+      <p>O cafea bună face <span class="hl">comunitățile</span> mai frumoase!</p>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div>
+          <span class="eyebrow" style="color:var(--lime-dark)">Locații</span>
+          <h2>Ne găsești în <span data-stat="locations">3</span> locuri</h2>
+          <ul class="check-list">
+            <li><strong>Coffee &amp; Snacks Borca</strong> — Str. Principală nr. 45, centru, la parter (fosta Casa Dornei). Non-stop.</li>
+            <li><strong>Simos Borca</strong> — aparat de cafea în magazin.</li>
+            <li><strong>Simos Broșteni</strong> — aparat de cafea în magazin.</li>
+          </ul>
+          <a class="btn" href="locatii.html">Vezi toate locațiile</a>
+        </div>
+        <div id="map" class="map map-small" role="region" aria-label="Harta locațiilor"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container split">
+        <div>
+          <span class="eyebrow" style="color:var(--lime-dark)">Noutăți</span>
+          <h2>Vă mulțumim că ați venit!</h2>
+          <p>Înainte de lansare am împărțit <strong>160 de cornuri</strong> fiecărui om care a trecut prin fața viitoarei noastre locații din centrul Borca. Mulțumim pentru primirea caldă!</p>
+          <p class="script" style="font-size:2rem;color:var(--lime-dark)">Împreună pentru comunitate!</p>
+        </div>
+        <div class="posters">
+          <img src="assets/img/foto/afis-multumim.jpg" alt="Afiș: Vă mulțumim că ați venit! Am împărțit 160 cornuri" loading="lazy" width="1000" height="1000">
+          <img src="assets/img/foto/afis-cornuri.jpg" alt="Afiș: Centru Borca, la parter, fosta Casa Dornei" loading="lazy" width="1000" height="1000">
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2>Vrei un aparat Coffee &amp; Snacks?</h2>
+            <p>Ne extindem rețeaua. Instalăm gratuit aparate de cafea și snacks în magazine, birouri, școli și fabrici.</p>
+          </div>
+          <a class="btn" href="vending.html#parteneriat">Propune o locație</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+          <p style="margin-top:14px">Cafea de specialitate, snacks și băuturi reci — self service, zi și noapte.</p>
+          <p class="script" style="font-size:1.6rem;margin:0">Aromă care te ține în mișcare!</p>
+        </div>
+        <div>
+          <h4>Navigare</h4>
+          <ul>
+            <li><a href="locatii.html">Locații &amp; hartă</a></li>
+            <li><a href="vending.html">Aparat în locația ta</a></li>
+            <li><a href="magazin.html">Magazin online</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Locația non-stop</h4>
+          <ul>
+            <li data-config="shop.address"></li>
+            <li data-config="shop.landmark"></li>
+            <li data-config="shop.hours"></li>
+            <li><a data-href="map" href="#" target="_blank" rel="noopener">Indicații rutiere</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a data-href="phone" href="#" data-config="phone"></a></li>
+            <li><a data-href="email" href="#" data-config="email"></a></li>
+            <li><a data-href="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a data-href="social.facebook" href="#" target="_blank" rel="noopener">Facebook</a> · <a data-href="social.instagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> <span data-config="companyName"></span> · CUI <span data-config="cui"></span> · <span data-config="regCom"></span></span>
+        <span><a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a> · <a href="https://consumer-redress.ec.europa.eu" target="_blank" rel="noopener">SOL</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/locations.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

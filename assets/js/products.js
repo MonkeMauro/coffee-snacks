@@ -1,0 +1,155 @@
+/*
+ * Produsele din magazinul online.
+ * Adaugă / șterge / modifică obiecte în listă. Câmpuri:
+ *   id        – identificator unic (fără spații)
+ *   name      – denumire
+ *   category  – una dintre cheile din PRODUCT_CATEGORIES
+ *   price     – preț în lei (număr) sau null pentru „la cerere”
+ *   unit      – ex. „1 kg”, „100 capsule”
+ *   desc      – descriere scurtă
+ *   image     – cale către imagine (ex. "assets/img/produse/espresso.jpg") sau "" pentru imagine generică
+ *   badge     – etichetă opțională (ex. „Nou”, „Best seller”)
+ *   available – false dacă produsul nu e momentan în stoc
+ */
+window.PRODUCT_CATEGORIES = {
+  cafea: "Cafea boabe & măcinată",
+  capsule: "Capsule & pad-uri",
+  ceai: "Ceai & ciocolată caldă",
+  snacks: "Snacks & dulciuri",
+  accesorii: "Accesorii",
+};
+
+window.PRODUCTS = [
+  {
+    id: "espresso-blend-1kg",
+    name: "Espresso Blend Clasic",
+    category: "cafea",
+    price: 89,
+    unit: "1 kg boabe",
+    desc: "Amestecul folosit în aparatele noastre: 70% arabica, 30% robusta. Cremă densă, note de ciocolată și alune.",
+    image: "",
+    badge: "Best seller",
+    available: true,
+  },
+  {
+    id: "arabica-100-1kg",
+    name: "100% Arabica Brazilia",
+    category: "cafea",
+    price: 109,
+    unit: "1 kg boabe",
+    desc: "Corp mediu, aciditate scăzută, note de caramel. Potrivită pentru espresso și filtru.",
+    image: "",
+    badge: "",
+    available: true,
+  },
+  {
+    id: "macinata-500g",
+    name: "Cafea măcinată pentru filtru",
+    category: "cafea",
+    price: 42,
+    unit: "500 g",
+    desc: "Măcinare medie, ideală pentru cafetiera de filtru sau french press.",
+    image: "",
+    badge: "",
+    available: true,
+  },
+  {
+    id: "capsule-compatibile-100",
+    name: "Capsule compatibile Nespresso",
+    category: "capsule",
+    price: 99,
+    unit: "100 capsule",
+    desc: "Intensitate 9, cafea de specialitate în capsule compostabile.",
+    image: "",
+    badge: "Nou",
+    available: true,
+  },
+  {
+    id: "pad-uri-ese-150",
+    name: "Pad-uri ESE 44 mm",
+    category: "capsule",
+    price: 115,
+    unit: "150 buc.",
+    desc: "Pad-uri individuale pentru espressoare compatibile ESE.",
+    image: "",
+    badge: "",
+    available: false,
+  },
+  {
+    id: "ciocolata-calda-1kg",
+    name: "Ciocolată caldă instant",
+    category: "ceai",
+    price: 55,
+    unit: "1 kg",
+    desc: "Aceeași ciocolată caldă cremoasă din aparatele noastre, acum pentru acasă.",
+    image: "",
+    badge: "",
+    available: true,
+  },
+  {
+    id: "ceai-verde-50",
+    name: "Ceai verde cu iasomie",
+    category: "ceai",
+    price: 24,
+    unit: "50 plicuri",
+    desc: "Ceai verde chinezesc aromatizat natural cu flori de iasomie.",
+    image: "",
+    badge: "",
+    available: true,
+  },
+  {
+    id: "mix-snacks-box",
+    name: "Box snacks pentru birou",
+    category: "snacks",
+    price: 149,
+    unit: "40 buc.",
+    desc: "Mix de batoane, napolitane, chipsuri și biscuiți — perfect pentru echipă.",
+    image: "",
+    badge: "Pentru birou",
+    available: true,
+  },
+  {
+    id: "batoane-proteice-12",
+    name: "Batoane proteice",
+    category: "snacks",
+    price: 79,
+    unit: "12 buc.",
+    desc: "20 g proteină pe baton, fără zahăr adăugat. Arome asortate.",
+    image: "",
+    badge: "",
+    available: true,
+  },
+  {
+    id: "pahare-carton-100",
+    name: "Pahare carton cu capac",
+    category: "accesorii",
+    price: 39,
+    unit: "100 buc., 250 ml",
+    desc: "Pahare dublu perete, rezistente la căldură, cu capace incluse.",
+    image: "",
+    badge: "",
+    available: true,
+  },
+  {
+    id: "zahar-plicuri-1000",
+    name: "Zahăr în plicuri",
+    category: "accesorii",
+    price: 49,
+    unit: "1000 plicuri x 4 g",
+    desc: "Zahăr alb în plicuri individuale, ideal pentru birouri și HoReCa.",
+    image: "",
+    badge: "",
+    available: true,
+  },
+  {
+    id: "aparat-birou",
+    name: "Aparat de cafea pentru birou",
+    category: "accesorii",
+    price: null,
+    unit: "comodat sau vânzare",
+    desc: "Espressor automat cu râșniță pentru birouri de 10–50 de persoane. Ofertă personalizată.",
+    image: "",
+    badge: "La cerere",
+    available: true,
+  },
+];

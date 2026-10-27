@@ -1,0 +1,51 @@
+/*
+ * Locațiile Coffee & Snacks — apar pe hartă și în listă.
+ * Câmpuri:
+ *   name     – numele locației
+ *   city     – localitatea (folosită la filtrare)
+ *   address  – adresa
+ *   details  – reper (opțional)
+ *   type     – ex. „Locație proprie”, „Aparat în magazin”
+ *   products – ce găsești: "cafea", "snacks", "bauturi"
+ *   hours    – program de acces
+ *   lat, lng – coordonate pentru hartă. Cele de mai jos sunt APROXIMATIVE:
+ *              în Google Maps, click dreapta pe locul exact → copiezi cele două numere.
+ *   own      – true pentru locația proprie non-stop (apare evidențiată)
+ *   soon     – true dacă locația nu e încă deschisă
+ */
+window.LOCATIONS = [
+  {
+    name: "Coffee & Snacks – Self Service Station",
+    city: "Borca",
+    address: "Str. Principală nr. 45, Borca, jud. Neamț",
+    details: "Centru Borca, la parter – fosta Casa Dornei",
+    type: "Locație proprie",
+    products: ["cafea", "snacks", "bauturi"],
+    hours: "Non-stop, 24/7",
+    lat: 47.1835,
+    lng: 25.7705,
+    own: true,
+  },
+  {
+    name: "Simos Borca",
+    city: "Borca",
+    address: "Borca, jud. Neamț",
+    details: "Aparat de cafea în magazinul Simos",
+    type: "Aparat vending",
+    products: ["cafea"],
+    hours: "În programul magazinului",
+    lat: 47.1872,
+    lng: 25.7642,
+  },
+  {
+    name: "Simos Broșteni",
+    city: "Broșteni",
+    address: "Broșteni, jud. Suceava",
+    details: "Aparat de cafea în magazinul Simos",
+    type: "Aparat vending",
+    products: ["cafea"],
+    hours: "În programul magazinului",
+    lat: 47.2367,
+    lng: 25.6975,
+  },
+];

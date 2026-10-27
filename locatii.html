@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Locații și hartă · Coffee &amp; Snacks</title>
+  <meta name="description" content="Harta locațiilor Coffee & Snacks: stația self service non-stop din centrul Borca și aparatele din Simos Borca și Simos Broșteni.">
+  <meta property="og:title" content="Locații și hartă · Coffee &amp; Snacks">
+  <meta property="og:description" content="Harta locațiilor Coffee & Snacks: stația self service non-stop din centrul Borca și aparatele din Simos Borca și Simos Broșteni.">
+  <meta name="theme-color" content="#0f2418">
+  <meta property="og:image" content="assets/img/foto/hero.jpg">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Sari la conținut</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Meniu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Navigare principală">
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="locatii.html" aria-current="page">Locații</a></li>
+          <li><a href="magazin.html">Magazin</a></li>
+          <li><a href="vending.html">Parteneri</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="btn" href="locatii.html">Harta locațiilor</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Locații</span>
+        <h1>Unde ne găsești</h1>
+        <p>Stația noastră self service din centrul Borca e deschisă non-stop, iar aparatele de cafea le găsești și în magazinele partenere.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div id="map" class="map" role="region" aria-label="Harta locațiilor Coffee &amp; Snacks"></div>
+
+        <div class="location-toolbar" style="margin-top:32px">
+          <h2 style="margin:0">Toate locațiile</h2>
+          <label class="visually-hidden" for="city-filter">Filtrează după localitate</label>
+          <select id="city-filter" class="select"></select>
+        </div>
+        <ul id="location-list" class="location-list"></ul>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container split">
+        <div class="photo" style="aspect-ratio:4/3">
+          <img src="assets/img/foto/intrare.jpg" alt="Intrarea în stația Coffee &amp; Snacks din Borca" loading="lazy">
+        </div>
+        <div>
+          <span class="eyebrow" style="color:var(--lime-dark)">Locația proprie</span>
+          <h2>Coffee &amp; Snacks Borca</h2>
+          <p><strong data-config="shop.address"></strong><br><span data-config="shop.landmark"></span></p>
+          <ul class="check-list">
+            <li>Deschis non-stop, 24 de ore din 24</li>
+            <li>Cafea de specialitate la 5 lei</li>
+            <li>Snacks, apă, sucuri și energizante</li>
+            <li>Spațiu încălzit, luminat și supravegheat video</li>
+          </ul>
+          <a class="btn" data-href="map" href="#" target="_blank" rel="noopener">Indicații rutiere</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2>Vrei un aparat și în localitatea ta?</h2>
+            <p>Ai un magazin, o firmă sau un spațiu cu trafic? Hai să vorbim.</p>
+          </div>
+          <a class="btn" href="vending.html#parteneriat">Propune o locație</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+          <p style="margin-top:14px">Cafea de specialitate, snacks și băuturi reci — self service, zi și noapte.</p>
+          <p class="script" style="font-size:1.6rem;margin:0">Aromă care te ține în mișcare!</p>
+        </div>
+        <div>
+          <h4>Navigare</h4>
+          <ul>
+            <li><a href="locatii.html">Locații &amp; hartă</a></li>
+            <li><a href="vending.html">Aparat în locația ta</a></li>
+            <li><a href="magazin.html">Magazin online</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Locația non-stop</h4>
+          <ul>
+            <li data-config="shop.address"></li>
+            <li data-config="shop.landmark"></li>
+            <li data-config="shop.hours"></li>
+            <li><a data-href="map" href="#" target="_blank" rel="noopener">Indicații rutiere</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a data-href="phone" href="#" data-config="phone"></a></li>
+            <li><a data-href="email" href="#" data-config="email"></a></li>
+            <li><a data-href="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a data-href="social.facebook" href="#" target="_blank" rel="noopener">Facebook</a> · <a data-href="social.instagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> <span data-config="companyName"></span> · CUI <span data-config="cui"></span> · <span data-config="regCom"></span></span>
+        <span><a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a> · <a href="https://consumer-redress.ec.europa.eu" target="_blank" rel="noopener">SOL</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/locations.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
