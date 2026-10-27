@@ -55,6 +55,6 @@ python3 -m http.server 8000
 ## Înainte de lansare
 
 - [ ] Completează emailul și Nr. Reg. Com. în `config.js`
-- [ ] Verifică prețurile Fresso din `products.js` (preluate de pe coffeepoint.ro pe 27.10.2026)
+- [ ] Verifică prețurile Fresso din `products.js` (coffeepoint.ro din 27.10.2026 + 35% specialitate / + 25% boabe 1 kg)
 - [ ] Adaugă poze cu produsele în `assets/img/produse/` (pozele de pe coffeepoint.ro sunt pe gomagcdn.ro)
 - [ ] Adaugă linkurile reale de Facebook / Instagram
