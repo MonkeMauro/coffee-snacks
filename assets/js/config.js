@@ -21,8 +21,8 @@ window.SITE_CONFIG = {
     landmark: "Centru Borca, la parter – fosta Casa Dornei",
     hours: "Deschis non-stop, 24/7",
     // Coordonatele exacte ale intrării (vezi README pentru cum le iei din Google Maps)
-    lat: 47.17969,
-    lng: 25.785338,
+    lat: 47.1783,
+    lng: 25.78861,
   },
 
   social: {
