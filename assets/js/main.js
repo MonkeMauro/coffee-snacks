@@ -103,21 +103,204 @@
     return formatPrice(p.variants ? p.variants[0].price : p.price);
   }
 
-  function orderLink(p, variant, grind) {
-    var unit = variant ? variant.unit : p.unit;
-    var price = variant ? variantPrice(variant, grind) : p.price;
-    var text =
-      "Bună ziua! Aș dori să comand / să aflu mai multe despre:\n" +
-      "• " + p.name + " (" + unit + (grind ? ", " + grind : "") + ") – " + formatPrice(price) +
-      "\n\nCantitate: \nNume: \nAdresă livrare: ";
-    if (cfg.orderChannel === "email") {
-      return { href: mailtoUrl("Comandă: " + p.name, text), label: "Comandă pe email" };
-    }
-    return { href: whatsappUrl(text), label: "Comandă pe WhatsApp" };
+  // grind = "" pentru boabe, altfel metoda de preparare pentru care se macină
+  function itemPrice(p, variantIdx, grind) {
+    if (!p.variants) return p.price;
+    var v = p.variants[variantIdx] || p.variants[0];
+    return grind && v.priceGround != null ? v.priceGround : v.price;
   }
 
-  function variantPrice(v, grind) {
-    return grind && grind !== "Boabe" && v.priceGround != null ? v.priceGround : v.price;
+  function itemUnit(p, variantIdx) {
+    return p.variants ? (p.variants[variantIdx] || p.variants[0]).unit : p.unit;
+  }
+
+  function grindLabel(grind) {
+    return grind ? "măcinată pentru " + grind : "boabe";
+  }
+
+  /* ---------- Coș ---------- */
+  var CART_KEY = "cs-cart";
+
+  function loadCart() {
+    try {
+      var data = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+      return Array.isArray(data) ? data : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  var cart = loadCart();
+
+  function saveCart() {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    } catch (e) {
+      /* fără stocare: coșul ține până la reîncărcarea paginii */
+    }
+    updateCartBadges();
+  }
+
+  function cartLines() {
+    var products = window.PRODUCTS || [];
+    return cart
+      .map(function (it) {
+        var p = products.find(function (x) { return x.id === it.id; });
+        if (!p) return null;
+        var price = itemPrice(p, it.v, it.g);
+        return { item: it, product: p, unit: itemUnit(p, it.v), price: price, total: price == null ? null : price * it.q };
+      })
+      .filter(Boolean);
+  }
+
+  function cartCount() {
+    return cart.reduce(function (n, it) { return n + it.q; }, 0);
+  }
+
+  function addToCart(id, v, g, q) {
+    var found = cart.find(function (it) { return it.id === id && it.v === v && it.g === g; });
+    if (found) found.q += q;
+    else cart.push({ id: id, v: v, g: g, q: q });
+    saveCart();
+  }
+
+  function updateCartBadges() {
+    var n = cartCount();
+    document.querySelectorAll("[data-cart-count]").forEach(function (el) {
+      el.textContent = n;
+      el.hidden = n === 0;
+    });
+  }
+
+  function orderText(form) {
+    var lines = cartLines();
+    var sum = 0;
+    var unknown = false;
+    var text = "Bună ziua! Aș dori să comand:\n";
+    lines.forEach(function (l) {
+      text += "• " + l.item.q + " x " + l.product.name + " (" + l.unit + (l.product.grinds ? ", " + grindLabel(l.item.g) : "") + ") – " + formatPrice(l.total) + "\n";
+      if (l.total == null) unknown = true;
+      else sum += l.total;
+    });
+    text += "\nTotal: " + formatPrice(sum) + (unknown ? " + produse cu preț la cerere" : "") + "\n";
+    ["nume", "telefon", "adresa", "observatii"].forEach(function (k) {
+      var el = form.elements[k];
+      if (el && el.value.trim()) text += "\n" + el.getAttribute("data-label") + ": " + el.value.trim();
+    });
+    return text;
+  }
+
+  function initCart() {
+    // Butonul de coș din antet, pe toate paginile
+    var header = document.querySelector(".header-inner");
+    var onShop = !!document.getElementById("product-grid");
+    if (header) {
+      var btn = document.createElement(onShop ? "button" : "a");
+      btn.className = "cart-btn";
+      if (onShop) {
+        btn.type = "button";
+        btn.setAttribute("data-cart-open", "");
+      } else {
+        btn.href = "magazin.html#cos";
+      }
+      btn.setAttribute("aria-label", "Coșul de cumpărături");
+      btn.innerHTML =
+        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>' +
+        '<span class="cart-count" data-cart-count hidden>0</span>';
+      header.insertBefore(btn, header.querySelector(".nav-toggle"));
+    }
+    updateCartBadges();
+    if (!onShop) return;
+
+    var dialog = document.getElementById("cart-dialog");
+    var content = document.getElementById("cart-dialog-content");
+
+    function render() {
+      var lines = cartLines();
+      if (!lines.length) {
+        content.innerHTML =
+          '<h2 id="cart-dialog-title">Coșul tău</h2>' +
+          '<p class="cart-empty">Coșul e gol. Alege un produs și apasă „Adaugă în coș”.</p>' +
+          '<button type="button" class="btn" data-close>Înapoi la produse</button>';
+        return;
+      }
+      var sum = 0;
+      var unknown = false;
+      var rows = lines.map(function (l, i) {
+        if (l.total == null) unknown = true;
+        else sum += l.total;
+        return (
+          '<li class="cart-item">' +
+          '<div class="cart-item-info"><strong>' + esc(l.product.name) + "</strong>" +
+          "<span>" + esc(l.unit) + (l.product.grinds ? " · " + esc(grindLabel(l.item.g)) : "") + "</span></div>" +
+          '<div class="qty" role="group" aria-label="Cantitate">' +
+          '<button type="button" data-qty="-1" data-i="' + i + '" aria-label="Scade">−</button>' +
+          "<span>" + l.item.q + "</span>" +
+          '<button type="button" data-qty="1" data-i="' + i + '" aria-label="Adaugă">+</button></div>' +
+          '<span class="cart-item-total">' + formatPrice(l.total) + "</span>" +
+          '<button type="button" class="cart-remove" data-remove="' + i + '" aria-label="Scoate din coș">&times;</button>' +
+          "</li>"
+        );
+      });
+      var email = cfg.orderChannel === "email";
+      content.innerHTML =
+        '<h2 id="cart-dialog-title">Coșul tău</h2>' +
+        '<ul class="cart-list">' + rows.join("") + "</ul>" +
+        '<p class="cart-sum"><span>Total</span><strong>' + formatPrice(sum) + (unknown ? " + la cerere" : "") + "</strong></p>" +
+        '<form class="cart-form" novalidate>' +
+        '<div class="field"><label for="c-nume">Nume</label><input id="c-nume" name="nume" data-label="Nume" autocomplete="name" required></div>' +
+        '<div class="field"><label for="c-tel">Telefon</label><input id="c-tel" name="telefon" data-label="Telefon" type="tel" autocomplete="tel" required></div>' +
+        '<div class="field"><label for="c-adresa">Adresă livrare</label><input id="c-adresa" name="adresa" data-label="Adresă livrare" autocomplete="street-address"></div>' +
+        '<div class="field"><label for="c-obs">Observații</label><textarea id="c-obs" name="observatii" data-label="Observații" rows="2"></textarea></div>' +
+        '<div class="dialog-actions"><button type="submit" class="btn">' + (email ? "Trimite comanda pe email" : "Trimite comanda pe WhatsApp") + "</button>" +
+        '<button type="button" class="btn btn-ghost" data-clear>Golește coșul</button></div>' +
+        '<p class="fine">Îți confirmăm stocul și livrarea. Plata se face la livrare sau prin transfer bancar.</p>' +
+        "</form>";
+    }
+
+    function open() {
+      render();
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.setAttribute("open", "");
+    }
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("[data-cart-open]")) open();
+    });
+
+    dialog.addEventListener("click", function (e) {
+      if (e.target === dialog || e.target.closest("[data-close]")) return dialog.close();
+      var qty = e.target.closest("[data-qty]");
+      if (qty) {
+        var it = cart[+qty.getAttribute("data-i")];
+        it.q += +qty.getAttribute("data-qty");
+        if (it.q < 1) cart.splice(cart.indexOf(it), 1);
+        saveCart();
+        return render();
+      }
+      var rm = e.target.closest("[data-remove]");
+      if (rm) {
+        cart.splice(+rm.getAttribute("data-remove"), 1);
+        saveCart();
+        return render();
+      }
+      if (e.target.closest("[data-clear]")) {
+        cart = [];
+        saveCart();
+        render();
+      }
+    });
+
+    dialog.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var form = e.target;
+      if (!form.reportValidity()) return;
+      var text = orderText(form);
+      if (cfg.orderChannel === "email") window.location.href = mailtoUrl("Comandă magazin", text);
+      else window.open(whatsappUrl(text), "_blank", "noopener");
+    });
+
+    if (location.hash === "#cos") open();
   }
 
   function productCard(p) {
@@ -137,12 +320,15 @@
           }).join("") + "</div>"
         : '<p class="product-unit">' + esc(productUnits(p)) + "</p>") +
       '<div class="product-foot"><span class="price" data-card-price>' + cardPrice(p) + "</span>" +
-      '<button type="button" class="btn btn-small" data-open="' + esc(p.id) + '">Detalii</button></div>' +
-      "</div></article>"
+      (p.available === false
+        ? '<button type="button" class="btn btn-small" data-open="' + esc(p.id) + '">Detalii</button>'
+        : '<button type="button" class="btn btn-small" data-quick-add>Adaugă în coș</button>') +
+      "</div></div></article>"
     );
   }
 
   function initShop() {
+    initCart();
     var grid = document.getElementById("product-grid");
     if (!grid) return;
     var products = window.PRODUCTS || [];
@@ -208,24 +394,39 @@
         card.querySelector("[data-card-price]").textContent = formatPrice(cp.variants[i].price);
         return;
       }
+      // Adaugă direct din card: gramajul ales, boabe, 1 bucată
+      var quick = e.target.closest("[data-quick-add]");
+      if (quick) {
+        var qc = quick.closest(".product-card");
+        addToCart(qc.getAttribute("data-id"), +(qc.getAttribute("data-variant") || 0), "", 1);
+        quick.textContent = "Adăugat ✓";
+        quick.classList.add("is-added");
+        setTimeout(function () {
+          quick.textContent = "Adaugă în coș";
+          quick.classList.remove("is-added");
+        }, 1400);
+        return;
+      }
       var trigger = e.target.closest("[data-open]");
       if (!trigger) return;
       var p = products.find(function (x) { return x.id === trigger.getAttribute("data-open"); });
       if (!p) return;
-      var startIdx = +(trigger.closest(".product-card").getAttribute("data-variant") || 0);
-      var sel = { variant: p.variants ? p.variants[startIdx] : null, grind: p.grinds ? p.grinds[0] : "" };
+      var sel = { v: +(trigger.closest(".product-card").getAttribute("data-variant") || 0), g: "", q: 1 };
       var variantChips = p.variants && p.variants.length > 1
         ? '<div class="option-group"><p class="option-label">Gramaj</p><div class="chips" data-variants>' +
           p.variants.map(function (v, i) {
-            return '<button type="button" class="chip" data-variant="' + i + '" aria-pressed="' + (i === startIdx) + '">' + esc(v.unit) + "</button>";
+            return '<button type="button" class="chip" data-variant="' + i + '" aria-pressed="' + (i === sel.v) + '">' + esc(v.unit) + "</button>";
           }).join("") + "</div></div>"
         : "";
-      var grindSelect = p.grinds
-        ? '<div class="option-group"><label class="option-label" for="grind-select">Formă</label>' +
+      var grindOptions = p.grinds
+        ? '<div class="option-group">' +
+          '<label class="check"><input type="checkbox" id="grind-check"> Vreau cafeaua măcinată</label>' +
+          '<div id="grind-method" class="grind-method" hidden><label class="option-label" for="grind-select">Măcinată pentru</label>' +
           '<select id="grind-select" class="select">' +
           p.grinds.map(function (g) { return "<option>" + esc(g) + "</option>"; }).join("") +
-          "</select></div>"
+          "</select></div></div>"
         : "";
+      var canBuy = p.available !== false;
       content.innerHTML =
         '<div class="dialog-media">' + productImage(p) + "</div>" +
         '<div class="dialog-info">' +
@@ -233,41 +434,61 @@
         '<h2 id="product-dialog-title">' + esc(p.name) + "</h2>" +
         '<p class="product-unit" data-unit></p>' +
         "<p>" + esc(p.desc) + "</p>" +
-        variantChips + grindSelect +
+        variantChips + grindOptions +
         '<p class="price price-lg" data-price></p>' +
-        (p.available === false
-          ? '<p class="notice">Produsul nu este momentan în stoc. Scrie-ne și te anunțăm când revine.</p>'
-          : "") +
-        '<div class="dialog-actions">' +
-        '<a class="btn" data-order target="_blank" rel="noopener"></a>' +
-        "</div>" +
+        (canBuy
+          ? '<div class="dialog-actions">' +
+            '<div class="qty qty-lg" role="group" aria-label="Cantitate"><button type="button" data-dq="-1" aria-label="Scade">−</button><span data-qty-val>1</span><button type="button" data-dq="1" aria-label="Adaugă">+</button></div>' +
+            '<button type="button" class="btn" data-add>Adaugă în coș</button>' +
+            "</div>" +
+            '<p class="added" data-added hidden>Adăugat în coș ✓ <button type="button" class="link-btn" data-cart-open>Vezi coșul</button></p>'
+          : '<p class="notice">Produsul nu este momentan în stoc. Scrie-ne și te anunțăm când revine.</p>') +
         '<p class="fine">Plata se face la livrare sau prin transfer bancar, după confirmarea comenzii.</p>' +
         "</div>";
 
       function update() {
-        var order = orderLink(p, sel.variant, sel.grind);
-        content.querySelector("[data-unit]").textContent = sel.variant ? sel.variant.unit : p.unit;
-        content.querySelector("[data-price]").textContent = formatPrice(sel.variant ? variantPrice(sel.variant, sel.grind) : p.price);
-        var link = content.querySelector("[data-order]");
-        link.href = order.href;
-        link.textContent = order.label;
+        content.querySelector("[data-unit]").textContent = itemUnit(p, sel.v);
+        var price = itemPrice(p, sel.v, sel.g);
+        content.querySelector("[data-price]").textContent =
+          sel.q > 1 && price != null ? formatPrice(price * sel.q) + " (" + sel.q + " × " + formatPrice(price) + ")" : formatPrice(price);
+        var qv = content.querySelector("[data-qty-val]");
+        if (qv) qv.textContent = sel.q;
+        var added = content.querySelector("[data-added]");
+        if (added) added.hidden = true;
       }
-      var chipBox = content.querySelector("[data-variants]");
-      if (chipBox) {
-        chipBox.addEventListener("click", function (ev) {
-          var btn = ev.target.closest("[data-variant]");
-          if (!btn) return;
-          sel.variant = p.variants[+btn.getAttribute("data-variant")];
-          chipBox.querySelectorAll(".chip").forEach(function (c) {
-            c.setAttribute("aria-pressed", c === btn ? "true" : "false");
+
+      content.onclick = function (ev) {
+        var vb = ev.target.closest("[data-variant]");
+        if (vb) {
+          sel.v = +vb.getAttribute("data-variant");
+          content.querySelectorAll("[data-variant]").forEach(function (c) {
+            c.setAttribute("aria-pressed", c === vb ? "true" : "false");
           });
+          return update();
+        }
+        var dq = ev.target.closest("[data-dq]");
+        if (dq) {
+          sel.q = Math.max(1, sel.q + +dq.getAttribute("data-dq"));
+          return update();
+        }
+        if (ev.target.closest("[data-add]")) {
+          addToCart(p.id, sel.v, sel.g, sel.q);
+          content.querySelector("[data-added]").hidden = false;
+          return;
+        }
+        if (ev.target.closest("[data-cart-open]")) dialog.close();
+      };
+      var check = content.querySelector("#grind-check");
+      if (check) {
+        var method = content.querySelector("#grind-method");
+        var gs = content.querySelector("#grind-select");
+        check.addEventListener("change", function () {
+          method.hidden = !check.checked;
+          sel.g = check.checked ? gs.value : "";
           update();
         });
-      }
-      var grindEl = content.querySelector("#grind-select");
-      if (grindEl) {
-        grindEl.addEventListener("change", function () {
-          sel.grind = grindEl.value;
+        gs.addEventListener("change", function () {
+          sel.g = gs.value;
           update();
         });
       }

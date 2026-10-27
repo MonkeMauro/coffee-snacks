@@ -8,7 +8,7 @@
  *   unit      – ex. „1 kg boabe”, „250 g” (când produsul are un singur gramaj)
  *   variants  – opțional, gramajele disponibile: [{ unit: "250 g", price: 60 }, ...]
  *               (înlocuiesc price / unit; priceGround = alt preț pentru varianta măcinată)
- *   grinds    – opțional, formele în care se poate comanda (ex. „Boabe”, „Măcinată – Espresso”)
+ *   grinds    – opțional, metodele pentru care se poate măcina (clientul bifează „Vreau cafeaua măcinată”)
  *   desc      – descriere scurtă
  *   image     – cale către imagine (ex. "assets/img/produse/fresso-blue.webp") sau "" pentru imagine generică
  *   badge     – etichetă opțională (ex. „Nou”, „Single origin”)
@@ -22,16 +22,8 @@ window.PRODUCT_CATEGORIES = {
   boabe: "Cafea boabe 1 kg",
 };
 
-// Toate cafelele de specialitate Fresso se pot lua boabe sau măcinate pentru metoda de preparare.
-var FRESSO_GRINDS = [
-  "Boabe",
-  "Măcinată – Espresso",
-  "Măcinată – Moka Pot",
-  "Măcinată – Ibric",
-  "Măcinată – French Press",
-  "Măcinată – Filtru (V60)",
-  "Măcinată – AeroPress",
-];
+// Cafelele de specialitate Fresso vin boabe sau, la cerere, măcinate pentru metoda de preparare.
+var FRESSO_GRINDS = ["Espresso", "Moka Pot", "Ibric", "French Press", "Filtru (V60)", "AeroPress"];
 
 window.PRODUCTS = [
   // ---------- Cafea de specialitate Fresso (proaspăt prăjită) ----------
@@ -76,7 +68,7 @@ window.PRODUCTS = [
     ],
     grinds: FRESSO_GRINDS,
     desc: "Microlot din Guatemala, Q-Grade 85/100. Note de coacăze negre, vanilie și miere, cu aciditate vibrantă.",
-    image: "",
+    image: "assets/img/produse/fresso-guatemala.webp",
     badge: "Single origin",
     available: true,
   },
@@ -91,7 +83,7 @@ window.PRODUCTS = [
     ],
     grinds: FRESSO_GRINDS,
     desc: "Microlot din Rwanda, procesare honey, Q-Grade 85/100. Note dulci de caramel, miere de tei și caisă coaptă.",
-    image: "",
+    image: "assets/img/produse/fresso-rwanda.webp",
     badge: "Single origin",
     available: true,
   },
@@ -121,7 +113,7 @@ window.PRODUCTS = [
     ],
     grinds: FRESSO_GRINDS,
     desc: "100% Arabica din regiunea Tarrazu, boabe SHB, Q-Grade 82,25. Note de caramel, ciocolată, alune de pădure și portocală.",
-    image: "",
+    image: "assets/img/produse/fresso-costa-rica.webp",
     badge: "Single origin",
     available: true,
   },
@@ -166,7 +158,7 @@ window.PRODUCTS = [
     ],
     grinds: FRESSO_GRINDS,
     desc: "Cafea de specialitate decofeinizată din Huila, Columbia, Q-Grade 84,5. Note de ciocolată neagră, măr și migdale.",
-    image: "",
+    image: "assets/img/produse/fresso-columbia-huila.webp",
     badge: "Decofeinizată",
     available: true,
   },

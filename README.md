@@ -35,7 +35,7 @@ Pune pozele în `assets/img/produse/` (JPG, ~800 px lățime) și scrie calea la
 
 ## Cum funcționează comenzile
 
-Nu există plată online. Clientul apasă „Comandă pe WhatsApp” și i se deschide un mesaj gata completat către numărul din `config.js`. Formularele de parteneriat și contact funcționează la fel (WhatsApp sau email). Pentru comenzi pe email setează `orderChannel: "email"`.
+Nu există plată online. Clientul pune produsele în coș (gramaj, boabe sau măcinată, cantitate), completează numele și telefonul și apasă „Trimite comanda pe WhatsApp”: i se deschide un mesaj gata completat, cu toate produsele și totalul, către numărul din `config.js`. Coșul se păstrează în browserul clientului. Formularele de parteneriat și contact funcționează la fel (WhatsApp sau email). Pentru comenzi pe email setează `orderChannel: "email"`.
 
 ## Publicare pe GitHub Pages
 
@@ -56,5 +56,5 @@ python3 -m http.server 8000
 
 - [ ] Completează emailul și Nr. Reg. Com. în `config.js`
 - [ ] Verifică prețurile Fresso din `products.js` (coffeepoint.ro din 27.10.2026 + 35% specialitate / + 25% boabe 1 kg)
-- [ ] Adaugă pozele care lipsesc în `assets/img/produse/` (Guatemala, Rwanda, Costa Rica, Columbia Huila, Blue, Green, Intense, Red)
+- [ ] Adaugă pozele care lipsesc în `assets/img/produse/` (Blue, Green, Intense, Red)
 - [ ] Adaugă linkurile reale de Facebook / Instagram
