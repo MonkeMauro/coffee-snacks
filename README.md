@@ -24,7 +24,7 @@ Toate datele se schimbă din fișierele din `assets/js/`, fără să atingi HTML
 
 ### Coordonatele pe hartă
 
-Coordonatele din `locations.js` sunt **aproximative** (centrul localității). Ca să le pui exacte:
+Pentru o locație nouă, coordonatele le iei așa:
 1. Deschide Google Maps și găsește locul exact.
 2. Click dreapta pe el → primul rând sunt coordonatele (ex. `47.18350, 25.77050`).
 3. Le treci la `lat` și `lng` în `locations.js` (și în `config.js` pentru locația proprie).
@@ -55,6 +55,5 @@ python3 -m http.server 8000
 ## Înainte de lansare
 
 - [ ] Completează telefonul, WhatsApp-ul, emailul și datele firmei în `config.js`
-- [ ] Pune coordonatele exacte ale celor 3 locații
 - [ ] Înlocuiește produsele exemplu din `products.js` cu produsele reale
 - [ ] Adaugă linkurile reale de Facebook / Instagram

@@ -8,8 +8,8 @@
  *   type     – ex. „Locație proprie”, „Aparat în magazin”
  *   products – ce găsești: "cafea", "irish", "ciocolata", "snacks", "bauturi"
  *   hours    – program de acces
- *   lat, lng – coordonate pentru hartă. Cele de mai jos sunt APROXIMATIVE:
- *              în Google Maps, click dreapta pe locul exact → copiezi cele două numere.
+ *   lat, lng – coordonate pentru hartă (în Google Maps: click dreapta pe locul exact
+ *              → copiezi cele două numere).
  *   own      – true pentru locația proprie non-stop (apare evidențiată)
  *   soon     – true dacă locația nu e încă deschisă
  */
@@ -22,8 +22,8 @@ window.LOCATIONS = [
     type: "Locație proprie",
     products: ["cafea", "irish", "ciocolata", "snacks", "bauturi"],
     hours: "Non-stop, 24/7",
-    lat: 47.1835,
-    lng: 25.7705,
+    lat: 47.1856,
+    lng: 25.7831,
     own: true,
   },
   {
