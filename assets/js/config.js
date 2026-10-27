@@ -10,7 +10,7 @@ window.SITE_CONFIG = {
   // Nr. Registrul Comerțului (ex. "J27/123/2021"); gol = nu se afișează
   regCom: "",
   // Sediul social, exact ca în certificatul de înregistrare (apare în footer și în paginile legale)
-  registeredOffice: "",
+  registeredOffice: "Municipiul Constanța, Strada Eliberării nr. 7, jud. Constanța",
   // Banca și IBAN pentru plata prin transfer (apar la Metode de plată); gol = nu se afișează
   bank: "",
   iban: "",

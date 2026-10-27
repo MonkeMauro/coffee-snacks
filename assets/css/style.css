@@ -1242,8 +1242,14 @@ textarea {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr 1.2fr;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr 1.3fr;
   gap: 32px;
+}
+
+@media (max-width: 1080px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 @media (max-width: 860px) {
@@ -2088,4 +2094,23 @@ textarea {
 
 .order-done .dialog-actions {
   justify-content: center;
+}
+
+.legal-notice {
+  margin: 24px 0;
+  max-width: 560px;
+}
+
+.legal-notice img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.legal-notice figcaption {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 8px;
 }
