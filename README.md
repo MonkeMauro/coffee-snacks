@@ -55,5 +55,6 @@ python3 -m http.server 8000
 ## Înainte de lansare
 
 - [ ] Completează emailul și Nr. Reg. Com. în `config.js`
-- [ ] Înlocuiește produsele exemplu din `products.js` cu produsele reale
+- [ ] Verifică prețurile Fresso din `products.js` (preluate după coffeepoint.ro) și completează prețul la Fresso Brown și Etiopia Yirgacheffe
+- [ ] Adaugă poze cu produsele în `assets/img/produse/`
 - [ ] Adaugă linkurile reale de Facebook / Instagram

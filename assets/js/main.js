@@ -77,6 +77,8 @@
 
   /* ---------- Imagini generice pentru produse ---------- */
   var ICONS = {
+    specialitate: '<path d="M14 26h28v14a10 10 0 0 1-10 10h-8a10 10 0 0 1-10-10z"/><path d="M42 30h4a5 5 0 0 1 0 10h-4"/><path d="M22 12c0 3 3 3 3 6M30 12c0 3 3 3 3 6"/>',
+    boabe: '<ellipse cx="25" cy="34" rx="10" ry="14" transform="rotate(-30 25 34)"/><path d="M19 23c5 5 7 15 12 22"/><ellipse cx="42" cy="26" rx="8" ry="11" transform="rotate(25 42 26)"/><path d="M37 17c5 5 4 13 9 18"/>',
     cafea: '<path d="M14 26h28v14a10 10 0 0 1-10 10h-8a10 10 0 0 1-10-10z"/><path d="M42 30h4a5 5 0 0 1 0 10h-4"/><path d="M22 12c0 3 3 3 3 6M30 12c0 3 3 3 3 6"/>',
     capsule: '<path d="M18 22h28l-4 24H22z"/><ellipse cx="32" cy="22" rx="16" ry="4"/>',
     ceai: '<path d="M14 24h30v12a12 12 0 0 1-12 12h-6a12 12 0 0 1-12-12z"/><path d="M44 28h3a5 5 0 0 1 0 10h-3"/><path d="M28 24v-8l6 4"/>',
