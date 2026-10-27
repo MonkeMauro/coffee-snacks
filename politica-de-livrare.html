@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.tile.openstreetmap.org https://unpkg.com; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Politica de livrare · Coffee &amp; Snacks</title>
+  <meta name="description" content="Cum, unde și în cât timp livrează Coffee & Snacks comenzile din magazinul online.">
+  <meta property="og:title" content="Politica de livrare · Coffee &amp; Snacks">
+  <meta property="og:description" content="Cum, unde și în cât timp livrează Coffee & Snacks comenzile din magazinul online.">
+  <meta name="theme-color" content="#0f2418">
+  <meta property="og:image" content="assets/img/foto/hero.jpg">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Sari la conținut</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Meniu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Navigare principală">
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="locatii.html">Locații</a></li>
+          <li><a href="magazin.html">Magazin</a></li>
+          <li><a href="vending.html">Parteneri</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="btn" href="locatii.html">Harta locațiilor</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Clienți</span>
+        <h1>Politica de livrare</h1>
+        <p>Cum ajung produsele la tine și ce să verifici la primirea coletului.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+<h2>1. Unde livrăm</h2>
+        <p>Livrăm în toată România, prin curier<span data-if-config="delivery.courier"> (<span data-config="delivery.courier"></span>)</span>. Poți ridica și personal comanda de la locația noastră non-stop: <span data-config="shop.address"></span>, după ce îți confirmăm că e pregătită.</p>
+
+        <h2>2. Cât costă</h2>
+        <p data-if-config="delivery.cost">Transportul costă <span data-config="delivery.cost"></span> lei pe comandă<span data-if-config="delivery.freeFrom">, iar pentru comenzile de peste <span data-config="delivery.freeFrom"></span> lei este gratuit</span>. Costul apare în coș înainte de trimiterea comenzii.</p>
+        <p data-unless-config="delivery.cost">Costul transportului depinde de greutatea coletului și de localitate. Ți-l comunicăm la confirmarea comenzii, înainte de expediere, și poți renunța la comandă fără niciun cost dacă nu ești de acord.</p>
+        <p>Ridicarea personală de la locația noastră este gratuită.</p>
+
+        <h2>3. În cât timp</h2>
+        <p data-if-config="delivery.time">Termenul de livrare este de <span data-config="delivery.time"></span>.</p>
+        <p data-unless-config="delivery.time">Termenul de livrare ți-l comunicăm la confirmarea comenzii.</p>
+        <p>Cafeaua o comandăm proaspăt prăjită, așa că pentru unele sortimente și gramaje termenul poate fi cu 1–2 zile mai lung; te anunțăm dacă e cazul. Termenul maxim este de 30 de zile de la confirmare, conform legii. Dacă nu îl putem respecta, te anunțăm și poți anula comanda, cu returnarea integrală a banilor plătiți.</p>
+
+        <h2>4. La primirea coletului</h2>
+        <ul>
+          <li>Verifică coletul în prezența curierului. Dacă este deteriorat, desfăcut sau lipsesc produse, cere întocmirea unui proces-verbal și anunță-ne în aceeași zi.</li>
+          <li>Pentru alte probleme (produs greșit, pungă deteriorată) anunță-ne cât mai repede, cu o fotografie, la <a data-href="email" href="#" data-config="email"></a> sau pe <a data-href="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>. Le rezolvăm conform paginii <a href="garantia-produselor.html">Garanția produselor</a>.</li>
+        </ul>
+
+        <h2>5. Dacă livrarea nu reușește</h2>
+        <p>Dacă adresa sau telefonul sunt greșite ori coletul nu este ridicat, curierul îl returnează. Te contactăm pentru o nouă livrare; costul celei de-a doua livrări poate fi suportat de tine.</p>
+        <p class="updated">Ultima actualizare: 27 octombrie 2026</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+          <p style="margin-top:14px">Cafea de specialitate, snacks și băuturi reci — self service, zi și noapte.</p>
+          <ul>
+            <li data-config="shop.address"></li>
+            <li data-config="shop.hours"></li>
+            <li><a data-href="map" href="#" target="_blank" rel="noopener">Indicații rutiere</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Magazinul meu</h4>
+          <ul>
+            <li><a href="index.html">Despre noi</a></li>
+            <li><a href="magazin.html">Magazin online</a></li>
+            <li><a href="termeni-si-conditii.html">Termeni și condiții</a></li>
+            <li><a href="politica-de-confidentialitate.html">Politica de confidențialitate</a></li>
+            <li><a href="politica-cookies.html">Politica de cookies</a></li>
+            <li><a href="politica-de-livrare.html">Politica de livrare</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Clienți</h4>
+          <ul>
+            <li><a href="metode-de-plata.html">Metode de plată</a></li>
+            <li><a href="politica-de-retur.html">Politica de retur</a></li>
+            <li><a href="garantia-produselor.html">Garanția produselor</a></li>
+            <li><a href="formular-de-retur.html">Formular de retur</a></li>
+            <li><a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Date comerciale</h4>
+          <ul>
+            <li data-config="companyName"></li>
+            <li data-if-config="regCom">Nr. Reg. Com. <span data-config="regCom"></span></li>
+            <li>CUI <span data-config="cui"></span></li>
+            <li data-if-config="registeredOffice">Sediu: <span data-config="registeredOffice"></span></li>
+            <li><a data-href="email" href="#" data-config="email"></a></li>
+            <li><a data-href="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a> · <a data-href="social.facebook" href="#" target="_blank" rel="noopener">Facebook</a> · <a data-href="social.instagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-badges">
+        <a class="anpc-badge" href="https://reclamatiisal.anpc.ro/" target="_blank" rel="noopener" aria-label="ANPC – Soluționarea alternativă a litigiilor">
+          <strong>ANPC</strong><span>Soluționarea alternativă<br>a litigiilor</span>
+        </a>
+        <a class="anpc-badge" href="https://anpc.ro/" target="_blank" rel="noopener" aria-label="Autoritatea Națională pentru Protecția Consumatorilor">
+          <strong>ANPC</strong><span>Protecția<br>consumatorilor</span>
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> <span data-config="companyName"></span>. Toate drepturile rezervate.</span>
+        <span><a href="termeni-si-conditii.html">Termeni</a> · <a href="politica-de-confidentialitate.html">Confidențialitate</a> · <a href="politica-cookies.html">Cookies</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

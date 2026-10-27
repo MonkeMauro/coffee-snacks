@@ -43,6 +43,9 @@
     document.querySelectorAll("[data-if-config]").forEach(function (el) {
       if (!get(cfg, el.getAttribute("data-if-config"))) el.hidden = true;
     });
+    document.querySelectorAll("[data-unless-config]").forEach(function (el) {
+      if (get(cfg, el.getAttribute("data-unless-config"))) el.hidden = true;
+    });
     document.querySelectorAll("[data-href]").forEach(function (el) {
       var kind = el.getAttribute("data-href");
       if (kind === "email") el.href = "mailto:" + cfg.email;
@@ -172,22 +175,90 @@
     });
   }
 
-  function orderText(form) {
+  function cartTotals() {
     var lines = cartLines();
-    var sum = 0;
+    var sub = 0;
     var unknown = false;
-    var text = "Bună ziua! Aș dori să comand:\n";
     lines.forEach(function (l) {
-      text += "• " + l.item.q + " x " + l.product.name + " (" + l.unit + (l.product.grinds ? ", " + grindLabel(l.item.g) : "") + ") – " + formatPrice(l.total) + "\n";
       if (l.total == null) unknown = true;
-      else sum += l.total;
+      else sub += l.total;
     });
-    text += "\nTotal: " + formatPrice(sum) + (unknown ? " + produse cu preț la cerere" : "") + "\n";
-    ["nume", "telefon", "adresa", "observatii"].forEach(function (k) {
-      var el = form.elements[k];
-      if (el && el.value.trim()) text += "\n" + el.getAttribute("data-label") + ": " + el.value.trim();
+    var d = cfg.delivery || {};
+    var ship = d.cost == null ? null : d.freeFrom != null && sub >= d.freeFrom ? 0 : d.cost;
+    return { lines: lines, sub: sub, unknown: unknown, ship: ship, total: sub + (ship || 0) };
+  }
+
+  function shippingLabel(t) {
+    if (t.ship == null) return "se comunică la confirmare";
+    return t.ship === 0 ? "gratuit" : formatPrice(t.ship);
+  }
+
+  function newOrderId() {
+    var d = new Date();
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    return "CS-" + String(d.getFullYear()).slice(2) + pad(d.getMonth() + 1) + pad(d.getDate()) + "-" + (1000 + Math.floor(Math.random() * 9000));
+  }
+
+  function orderLinesText(t) {
+    return t.lines
+      .map(function (l) {
+        return "• " + l.item.q + " x " + l.product.name + " (" + l.unit + (l.product.grinds ? ", " + grindLabel(l.item.g) : "") + ") – " + formatPrice(l.total);
+      })
+      .join("\n");
+  }
+
+  function field(form, k) {
+    var el = form.elements[k];
+    return el ? el.value.trim() : "";
+  }
+
+  function orderText(form, orderId, t) {
+    var text = "Bună ziua! Comanda " + orderId + ":\n" + orderLinesText(t) + "\n\n";
+    text += "Produse: " + formatPrice(t.sub) + (t.unknown ? " + produse cu preț la cerere" : "") + "\n";
+    text += "Transport: " + shippingLabel(t) + "\n";
+    text += "Total: " + formatPrice(t.total) + (t.ship == null ? " + transport" : "") + "\n";
+    [["nume", "Nume"], ["telefon", "Telefon"], ["email", "Email"], ["adresa", "Adresă livrare"], ["observatii", "Observații"]].forEach(function (f) {
+      var v = field(form, f[0]);
+      if (v) text += "\n" + f[1] + ": " + v;
     });
+    text += "\n\nAm citit și sunt de acord cu Termenii și condițiile și Politica de confidențialitate.";
     return text;
+  }
+
+  function emailEnabled() {
+    var e = cfg.emailjs || {};
+    return !!(e.publicKey && e.serviceId && e.templateId);
+  }
+
+  // Trimite confirmarea comenzii prin EmailJS: clientul o primește pe email, magazinul în copie (setat în șablon)
+  function sendOrderEmail(form, orderId, t) {
+    var e = cfg.emailjs;
+    return fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        service_id: e.serviceId,
+        template_id: e.templateId,
+        user_id: e.publicKey,
+        template_params: {
+          order_id: orderId,
+          to_name: field(form, "nume"),
+          to_email: field(form, "email"),
+          phone: field(form, "telefon"),
+          address: field(form, "adresa"),
+          notes: field(form, "observatii"),
+          order_lines: orderLinesText(t),
+          subtotal: formatPrice(t.sub),
+          shipping: shippingLabel(t),
+          total: formatPrice(t.total) + (t.ship == null ? " + transport" : ""),
+          shop_name: cfg.companyName,
+          shop_email: cfg.email,
+          shop_whatsapp: "+" + cfg.whatsapp,
+        },
+      }),
+    }).then(function (res) {
+      if (!res.ok) throw new Error("EmailJS " + res.status);
+    });
   }
 
   function initCart() {
@@ -214,21 +285,18 @@
 
     var dialog = document.getElementById("cart-dialog");
     var content = document.getElementById("cart-dialog-content");
+    var sending = false;
 
     function render() {
-      var lines = cartLines();
-      if (!lines.length) {
+      var t = cartTotals();
+      if (!t.lines.length) {
         content.innerHTML =
           '<h2 id="cart-dialog-title">Coșul tău</h2>' +
           '<p class="cart-empty">Coșul e gol. Alege un produs și apasă „Adaugă în coș”.</p>' +
           '<button type="button" class="btn" data-close>Înapoi la produse</button>';
         return;
       }
-      var sum = 0;
-      var unknown = false;
-      var rows = lines.map(function (l, i) {
-        if (l.total == null) unknown = true;
-        else sum += l.total;
+      var rows = t.lines.map(function (l, i) {
         return (
           '<li class="cart-item">' +
           '<div class="cart-item-info"><strong>' + esc(l.product.name) + "</strong>" +
@@ -242,20 +310,45 @@
           "</li>"
         );
       });
-      var email = cfg.orderChannel === "email";
+      var d = cfg.delivery || {};
+      var viaEmail = emailEnabled() || cfg.orderChannel === "email";
       content.innerHTML =
         '<h2 id="cart-dialog-title">Coșul tău</h2>' +
         '<ul class="cart-list">' + rows.join("") + "</ul>" +
-        '<p class="cart-sum"><span>Total</span><strong>' + formatPrice(sum) + (unknown ? " + la cerere" : "") + "</strong></p>" +
+        '<p class="cart-shipping"><span>Transport' + (d.freeFrom != null && t.ship ? " (gratuit de la " + formatPrice(d.freeFrom) + ")" : "") + "</span><span>" + shippingLabel(t) + "</span></p>" +
+        '<p class="cart-sum"><span>Total</span><strong>' + formatPrice(t.total) + (t.ship == null ? " + transport" : "") + (t.unknown ? " + la cerere" : "") + "</strong></p>" +
         '<form class="cart-form" novalidate>' +
-        '<div class="field"><label for="c-nume">Nume</label><input id="c-nume" name="nume" data-label="Nume" autocomplete="name" required></div>' +
-        '<div class="field"><label for="c-tel">Telefon</label><input id="c-tel" name="telefon" data-label="Telefon" type="tel" autocomplete="tel" required></div>' +
-        '<div class="field"><label for="c-adresa">Adresă livrare</label><input id="c-adresa" name="adresa" data-label="Adresă livrare" autocomplete="street-address"></div>' +
-        '<div class="field"><label for="c-obs">Observații</label><textarea id="c-obs" name="observatii" data-label="Observații" rows="2"></textarea></div>' +
-        '<div class="dialog-actions"><button type="submit" class="btn">' + (email ? "Trimite comanda pe email" : "Trimite comanda pe WhatsApp") + "</button>" +
+        '<div class="field"><label for="c-nume">Nume și prenume *</label><input id="c-nume" name="nume" autocomplete="name" required></div>' +
+        '<div class="form-row">' +
+        '<div class="field"><label for="c-tel">Telefon *</label><input id="c-tel" name="telefon" type="tel" autocomplete="tel" required minlength="10"></div>' +
+        '<div class="field"><label for="c-email">Email *</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>' +
+        "</div>" +
+        '<div class="field"><label for="c-adresa">Adresă livrare *</label><input id="c-adresa" name="adresa" autocomplete="street-address" required placeholder="Stradă, număr, localitate, județ – sau „ridicare personală”"></div>' +
+        '<div class="field"><label for="c-obs">Observații</label><textarea id="c-obs" name="observatii" rows="2" placeholder="Ex. date pentru factură pe firmă"></textarea></div>' +
+        '<div class="hp-field" aria-hidden="true"><label for="c-site">Nu completa</label><input id="c-site" name="website" tabindex="-1" autocomplete="off"></div>' +
+        '<label class="check"><input type="checkbox" name="acord"> <span>Am citit și sunt de acord cu <a href="termeni-si-conditii.html" target="_blank">Termenii și condițiile</a> și cu <a href="politica-de-confidentialitate.html" target="_blank">Politica de confidențialitate</a>. *</span></label>' +
+        '<p class="form-error" data-error hidden></p>' +
+        '<div class="dialog-actions"><button type="submit" class="btn" data-submit>' + (viaEmail ? "Trimite comanda" : "Trimite comanda pe WhatsApp") + "</button>" +
         '<button type="button" class="btn btn-ghost" data-clear>Golește coșul</button></div>' +
-        '<p class="fine">Îți confirmăm stocul și livrarea. Plata se face la livrare sau prin transfer bancar.</p>' +
+        '<p class="fine">Comanda devine fermă după ce o confirmăm (stoc, transport, termen). Plata se face la livrare, prin link de card sau transfer bancar – vezi <a href="metode-de-plata.html" target="_blank">Metode de plată</a>. Ai drept de retragere în 14 zile, cu excepțiile din <a href="politica-de-retur.html" target="_blank">Politica de retur</a>.</p>' +
         "</form>";
+    }
+
+    function done(orderId, text, emailed) {
+      cart = [];
+      saveCart();
+      content.innerHTML =
+        '<div class="order-done">' +
+        '<h2 id="cart-dialog-title">Mulțumim!</h2>' +
+        "<p>Numărul comenzii tale este</p>" +
+        '<p class="order-id">' + esc(orderId) + "</p>" +
+        (emailed
+          ? "<p>Ți-am trimis confirmarea primirii pe email. Te contactăm în curând pentru confirmarea stocului, a transportului și a plății.</p>"
+          : "<p>Trimite mesajul deschis în WhatsApp ca să ajungă comanda la noi. Dacă nu s-a deschis, apasă butonul de mai jos.</p>") +
+        '<div class="dialog-actions">' +
+        '<a class="btn' + (emailed ? " btn-ghost" : "") + '" href="' + esc(whatsappUrl(text)) + '" target="_blank" rel="noopener">' + (emailed ? "Scrie-ne și pe WhatsApp" : "Deschide WhatsApp") + "</a>" +
+        '<button type="button" class="btn' + (emailed ? "" : " btn-ghost") + '" data-close>Închide</button>' +
+        "</div></div>";
     }
 
     function open() {
@@ -293,11 +386,55 @@
 
     dialog.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (sending) return;
       var form = e.target;
+      var err = form.querySelector("[data-error]");
+      err.hidden = true;
       if (!form.reportValidity()) return;
-      var text = orderText(form);
-      if (cfg.orderChannel === "email") window.location.href = mailtoUrl("Comandă magazin", text);
+      if (!form.elements.acord.checked) {
+        err.textContent = "Bifează acordul cu Termenii și condițiile și Politica de confidențialitate ca să poți trimite comanda.";
+        err.hidden = false;
+        form.elements.acord.focus();
+        return;
+      }
+      var orderId = newOrderId();
+      var t = cartTotals();
+      var text = orderText(form, orderId, t);
+      // Câmp capcană pentru roboți: completat doar de spam
+      if (field(form, "website")) return done(orderId, text, true);
+
+      if (emailEnabled()) {
+        var submit = form.querySelector("[data-submit]");
+        sending = true;
+        submit.disabled = true;
+        submit.textContent = "Se trimite…";
+        sendOrderEmail(form, orderId, t)
+          .then(function () {
+            done(orderId, text, true);
+          })
+          .catch(function () {
+            err.textContent = "Nu am putut trimite emailul. Trimite comanda pe WhatsApp, din butonul de mai jos.";
+            err.hidden = false;
+            submit.disabled = false;
+            submit.textContent = "Trimite comanda";
+            if (form.querySelector("[data-wa-fallback]")) return;
+            var wa = document.createElement("a");
+            wa.setAttribute("data-wa-fallback", "");
+            wa.className = "btn btn-ghost";
+            wa.href = whatsappUrl(text);
+            wa.target = "_blank";
+            wa.rel = "noopener";
+            wa.textContent = "Trimite pe WhatsApp";
+            submit.parentNode.insertBefore(wa, submit.nextSibling);
+          })
+          .then(function () {
+            sending = false;
+          });
+        return;
+      }
+      if (cfg.orderChannel === "email") window.location.href = mailtoUrl("Comanda " + orderId, text);
       else window.open(whatsappUrl(text), "_blank", "noopener");
+      done(orderId, text, false);
     });
 
     if (location.hash === "#cos") open();

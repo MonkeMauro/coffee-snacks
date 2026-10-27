@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.tile.openstreetmap.org https://unpkg.com; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formular de retur · Coffee &amp; Snacks</title>
+  <meta name="description" content="Formularul de retragere din contract pentru comenzile Coffee & Snacks.">
+  <meta property="og:title" content="Formular de retur · Coffee &amp; Snacks">
+  <meta property="og:description" content="Formularul de retragere din contract pentru comenzile Coffee & Snacks.">
+  <meta name="theme-color" content="#0f2418">
+  <meta property="og:image" content="assets/img/foto/hero.jpg">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Sari la conținut</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Meniu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Navigare principală">
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="locatii.html">Locații</a></li>
+          <li><a href="magazin.html">Magazin</a></li>
+          <li><a href="vending.html">Parteneri</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="btn" href="locatii.html">Harta locațiilor</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Clienți</span>
+        <h1>Formular de retur</h1>
+        <p>Completează formularul de mai jos dacă vrei să te retragi din contract. Vezi întâi condițiile din Politica de retur.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+<p>Formularul se trimite pe WhatsApp sau pe email. Poți folosi și orice altă declarație clară, sau poți tipări modelul de mai jos. Condițiile sunt în <a href="politica-de-retur.html">Politica de retur</a>.</p>
+
+        <form class="form" data-mail-form="Formular de retragere din contract" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="r-name">Nume și prenume *</label>
+              <input id="r-name" name="nume" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="r-phone">Telefon *</label>
+              <input id="r-phone" name="telefon" type="tel" required autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="r-email">Email</label>
+              <input id="r-email" name="email" type="email" autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="r-order">Număr comandă *</label>
+              <input id="r-order" name="comanda" required placeholder="ex. CS-261027-4821">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="r-ordered">Data comenzii</label>
+              <input id="r-ordered" name="data_comenzii" type="date">
+            </div>
+            <div class="field">
+              <label for="r-received">Data primirii *</label>
+              <input id="r-received" name="data_primirii" type="date" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="r-address">Adresa ta *</label>
+            <input id="r-address" name="adresa" required autocomplete="street-address">
+          </div>
+          <div class="field">
+            <label for="r-products">Produsele returnate (denumire, gramaj, cantitate) *</label>
+            <textarea id="r-products" name="produse" rows="3" required></textarea>
+          </div>
+          <div class="field">
+            <label for="r-iban">IBAN pentru rambursare (dacă ai plătit prin transfer)</label>
+            <input id="r-iban" name="iban">
+          </div>
+          <input type="hidden" name="declaratie" data-label="Declarație" value="Vă informez prin prezenta cu privire la retragerea mea din contractul referitor la vânzarea produselor de mai sus.">
+          <p class="fine">Prin trimitere declari că te retragi din contractul de vânzare pentru produsele de mai sus. Datele sunt folosite doar pentru retur, conform <a href="politica-de-confidentialitate.html">Politica de confidențialitate</a>.</p>
+          <div class="form-actions">
+            <button class="btn" type="submit" data-via="whatsapp">Trimite pe WhatsApp</button>
+            <button class="btn btn-ghost" type="submit" data-via="email">Trimite pe email</button>
+          </div>
+          <p class="form-ok" hidden>Mulțumim! Se deschide aplicația pentru a trimite formularul.</p>
+        </form>
+
+        <h2>Model de formular de retragere</h2>
+        <p class="fine">Conform Anexei nr. 2 la OUG nr. 34/2014. Completează și trimite acest formular doar dacă dorești să te retragi din contract.</p>
+        <div class="company-box">
+          Către <span data-config="companyName"></span>, <span data-if-config="registeredOffice"><span data-config="registeredOffice"></span>, </span>email <a data-href="email" href="#" data-config="email"></a>:<br><br>
+          — Vă informez prin prezenta cu privire la retragerea mea din contractul referitor la vânzarea următoarelor produse: ...........................<br>
+          — Comandate la data: ............ / primite la data: ............<br>
+          — Numele consumatorului: ...........................<br>
+          — Adresa consumatorului: ...........................<br>
+          — Semnătura consumatorului (doar dacă formularul este trimis pe hârtie): ............<br>
+          — Data: ............
+        </div>
+        <p class="updated">Ultima actualizare: 27 octombrie 2026</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="index.html" aria-label="Coffee &amp; Snacks – acasă"><img src="assets/img/logo.svg" alt="" width="40" height="40"><span>Coffee <span class="amp">&amp;</span> Snacks<small>SELF SERVICE STATION</small></span></a>
+          <p style="margin-top:14px">Cafea de specialitate, snacks și băuturi reci — self service, zi și noapte.</p>
+          <ul>
+            <li data-config="shop.address"></li>
+            <li data-config="shop.hours"></li>
+            <li><a data-href="map" href="#" target="_blank" rel="noopener">Indicații rutiere</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Magazinul meu</h4>
+          <ul>
+            <li><a href="index.html">Despre noi</a></li>
+            <li><a href="magazin.html">Magazin online</a></li>
+            <li><a href="termeni-si-conditii.html">Termeni și condiții</a></li>
+            <li><a href="politica-de-confidentialitate.html">Politica de confidențialitate</a></li>
+            <li><a href="politica-cookies.html">Politica de cookies</a></li>
+            <li><a href="politica-de-livrare.html">Politica de livrare</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Clienți</h4>
+          <ul>
+            <li><a href="metode-de-plata.html">Metode de plată</a></li>
+            <li><a href="politica-de-retur.html">Politica de retur</a></li>
+            <li><a href="garantia-produselor.html">Garanția produselor</a></li>
+            <li><a href="formular-de-retur.html">Formular de retur</a></li>
+            <li><a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Date comerciale</h4>
+          <ul>
+            <li data-config="companyName"></li>
+            <li data-if-config="regCom">Nr. Reg. Com. <span data-config="regCom"></span></li>
+            <li>CUI <span data-config="cui"></span></li>
+            <li data-if-config="registeredOffice">Sediu: <span data-config="registeredOffice"></span></li>
+            <li><a data-href="email" href="#" data-config="email"></a></li>
+            <li><a data-href="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a> · <a data-href="social.facebook" href="#" target="_blank" rel="noopener">Facebook</a> · <a data-href="social.instagram" href="#" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-badges">
+        <a class="anpc-badge" href="https://reclamatiisal.anpc.ro/" target="_blank" rel="noopener" aria-label="ANPC – Soluționarea alternativă a litigiilor">
+          <strong>ANPC</strong><span>Soluționarea alternativă<br>a litigiilor</span>
+        </a>
+        <a class="anpc-badge" href="https://anpc.ro/" target="_blank" rel="noopener" aria-label="Autoritatea Națională pentru Protecția Consumatorilor">
+          <strong>ANPC</strong><span>Protecția<br>consumatorilor</span>
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> <span data-config="companyName"></span>. Toate drepturile rezervate.</span>
+        <span><a href="termeni-si-conditii.html">Termeni</a> · <a href="politica-de-confidentialitate.html">Confidențialitate</a> · <a href="politica-cookies.html">Cookies</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
