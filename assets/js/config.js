@@ -10,7 +10,6 @@ window.SITE_CONFIG = {
   // Nr. Registrul Comerțului (ex. "J27/123/2021"); gol = nu se afișează
   regCom: "",
 
-  phone: "+40 700 000 000",
   // Număr WhatsApp doar cu cifre, cu prefix de țară (fără + sau spații)
   whatsapp: "40700000000",
   email: "contact@exemplu.ro",

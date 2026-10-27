@@ -45,8 +45,7 @@
     });
     document.querySelectorAll("[data-href]").forEach(function (el) {
       var kind = el.getAttribute("data-href");
-      if (kind === "phone") el.href = "tel:" + String(cfg.phone).replace(/\s+/g, "");
-      else if (kind === "email") el.href = "mailto:" + cfg.email;
+      if (kind === "email") el.href = "mailto:" + cfg.email;
       else if (kind === "whatsapp") el.href = "https://wa.me/" + cfg.whatsapp;
       else if (kind === "map") el.href = directionsUrl(cfg.shop || {});
       else {
@@ -179,7 +178,6 @@
       var p = products.find(function (x) { return x.id === trigger.getAttribute("data-open"); });
       if (!p) return;
       var order = orderLink(p);
-      var phoneHref = "tel:" + String(cfg.phone).replace(/\s+/g, "");
       content.innerHTML =
         '<div class="dialog-media">' + productImage(p) + "</div>" +
         '<div class="dialog-info">' +
@@ -193,7 +191,6 @@
           : "") +
         '<div class="dialog-actions">' +
         '<a class="btn" href="' + esc(order.href) + '" target="_blank" rel="noopener">' + order.label + "</a>" +
-        '<a class="btn btn-ghost" href="' + esc(phoneHref) + '">Sună-ne</a>' +
         "</div>" +
         '<p class="fine">Plata se face la livrare sau prin transfer bancar, după confirmarea comenzii.</p>' +
         "</div>";

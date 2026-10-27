@@ -18,7 +18,7 @@ Site static (HTML + CSS + JavaScript), fără build și fără server. Poate fi 
 
 Toate datele se schimbă din fișierele din `assets/js/`, fără să atingi HTML-ul:
 
-- **`config.js`** – telefon, WhatsApp, email, adresă, date firmă (CUI, Reg. Com.), linkuri Facebook/Instagram.
+- **`config.js`** – WhatsApp, email, adresă, date firmă (CUI, Reg. Com.), linkuri Facebook/Instagram.
 - **`locations.js`** – locațiile de pe hartă. Pentru o locație nouă copiezi un bloc `{ ... }` și completezi câmpurile.
 - **`products.js`** – produsele din magazin (nume, preț, categorie, descriere, imagine, stoc).
 
@@ -54,6 +54,6 @@ python3 -m http.server 8000
 
 ## Înainte de lansare
 
-- [ ] Completează telefonul, WhatsApp-ul, emailul și Nr. Reg. Com. în `config.js`
+- [ ] Completează WhatsApp-ul, emailul și Nr. Reg. Com. în `config.js`
 - [ ] Înlocuiește produsele exemplu din `products.js` cu produsele reale
 - [ ] Adaugă linkurile reale de Facebook / Instagram
