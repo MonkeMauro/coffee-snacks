@@ -22,8 +22,8 @@ window.LOCATIONS = [
     type: "Locație proprie",
     products: ["cafea", "irish", "ciocolata", "snacks", "bauturi"],
     hours: "Non-stop, 24/7",
-    lat: 47.1856,
-    lng: 25.7831,
+    lat: 47.17969,
+    lng: 25.785338,
     own: true,
   },
   {
