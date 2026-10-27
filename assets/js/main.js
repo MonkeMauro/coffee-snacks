@@ -287,17 +287,29 @@
 
     var markers = {};
     var all = window.LOCATIONS || [];
-    all.forEach(function (l, i) {
-      if (l.lat == null) return;
-      var icon = L.divIcon({
+
+    // dx = deplasare pe orizontală (px), folosită când două pinuri se suprapun
+    function makeIcon(l, dx) {
+      var w = l.own ? 46 : 30;
+      return L.divIcon({
         className: "map-pin" + (l.own ? " map-pin-own" : ""),
         html: l.own ? "<span><b>24/7</b></span>" : "<span></span>",
-        iconSize: l.own ? [46, 46] : [30, 30],
-        iconAnchor: l.own ? [23, 46] : [15, 30],
-        popupAnchor: [0, l.own ? -44 : -28],
+        iconSize: [w, w],
+        iconAnchor: [w / 2 - dx, w],
+        popupAnchor: [dx, -w + 2],
+        tooltipAnchor: [dx + (l.own ? -w / 2 : w / 2), -w / 2],
       });
-      markers[i] = L.marker([l.lat, l.lng], { icon: icon, title: l.name })
+    }
+
+    all.forEach(function (l, i) {
+      if (l.lat == null) return;
+      markers[i] = L.marker([l.lat, l.lng], { icon: makeIcon(l, 0), title: l.name, zIndexOffset: l.own ? 0 : 500 })
         .addTo(map)
+        .bindTooltip(esc(l.own ? "Coffee & Snacks 24/7" : l.name), {
+          permanent: true,
+          direction: l.own ? "left" : "right",
+          className: "map-label" + (l.own ? " map-label-own" : ""),
+        })
         .bindPopup(
           "<strong>" + esc(l.name) + "</strong><br>" + esc(l.address) +
           (l.details ? "<br><em>" + esc(l.details) + "</em>" : "") +
@@ -306,12 +318,33 @@
         );
     });
 
+    // Pinurile prea apropiate de locația proprie se așază lângă ea, ca să se vadă amândouă
+    function spread() {
+      var own = all.map(function (l, i) { return l.own && markers[i] ? map.latLngToContainerPoint(markers[i].getLatLng()) : null; }).filter(Boolean);
+      all.forEach(function (l, i) {
+        if (!markers[i] || l.own) return;
+        var pt = map.latLngToContainerPoint(markers[i].getLatLng());
+        var dx = 0;
+        own.forEach(function (o) {
+          if (Math.abs(pt.x - o.x) < 40 && Math.abs(pt.y - o.y) < 48) {
+            dx = (pt.x >= o.x ? 1 : -1) * 40 - (pt.x - o.x);
+          }
+        });
+        if (dx !== markers[i]._dx) {
+          markers[i]._dx = dx;
+          markers[i].setIcon(makeIcon(l, dx));
+        }
+      });
+    }
+    map.on("zoomend viewreset", spread);
+
     function fit(city) {
       var pts = locations.filter(function (l) { return !city || l.city === city; }).map(function (l) { return [l.lat, l.lng]; });
       if (pts.length === 1) map.setView(pts[0], 15);
       else if (pts.length) map.fitBounds(pts, { padding: [50, 50], maxZoom: 15 });
     }
     fit("");
+    spread();
 
     document.addEventListener("locations:filter", function (e) { fit(e.detail.city); });
     document.addEventListener("locations:focus", function (e) {
