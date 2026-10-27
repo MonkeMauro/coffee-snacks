@@ -95,14 +95,32 @@
   }
 
   /* ---------- Magazin ---------- */
-  function orderLink(p) {
+  function productUnits(p) {
+    return p.variants ? p.variants.map(function (v) { return v.unit; }).join(" / ") : p.unit;
+  }
+
+  function cardPrice(p) {
+    if (!p.variants) return formatPrice(p.price);
+    var prices = p.variants.map(function (v) { return v.price; });
+    var min = Math.min.apply(null, prices);
+    return (prices.length > 1 ? "de la " : "") + formatPrice(min);
+  }
+
+  function orderLink(p, variant, grind) {
+    var unit = variant ? variant.unit : p.unit;
+    var price = variant ? variantPrice(variant, grind) : p.price;
     var text =
       "Bună ziua! Aș dori să comand / să aflu mai multe despre:\n" +
-      "• " + p.name + " (" + p.unit + ") – " + formatPrice(p.price) + "\n\nCantitate: \nNume: \nAdresă livrare: ";
+      "• " + p.name + " (" + unit + (grind ? ", " + grind : "") + ") – " + formatPrice(price) +
+      "\n\nCantitate: \nNume: \nAdresă livrare: ";
     if (cfg.orderChannel === "email") {
       return { href: mailtoUrl("Comandă: " + p.name, text), label: "Comandă pe email" };
     }
     return { href: whatsappUrl(text), label: "Comandă pe WhatsApp" };
+  }
+
+  function variantPrice(v, grind) {
+    return grind && grind !== "Boabe" && v.priceGround != null ? v.priceGround : v.price;
   }
 
   function productCard(p) {
@@ -115,8 +133,8 @@
       '<div class="product-body">' +
       '<p class="product-cat">' + esc(window.PRODUCT_CATEGORIES[p.category] || "") + "</p>" +
       '<h3><button type="button" class="link-btn" data-open="' + esc(p.id) + '">' + esc(p.name) + "</button></h3>" +
-      '<p class="product-unit">' + esc(p.unit) + "</p>" +
-      '<div class="product-foot"><span class="price">' + formatPrice(p.price) + "</span>" +
+      '<p class="product-unit">' + esc(productUnits(p)) + "</p>" +
+      '<div class="product-foot"><span class="price">' + cardPrice(p) + "</span>" +
       '<button type="button" class="btn btn-small" data-open="' + esc(p.id) + '">Detalii</button></div>' +
       "</div></article>"
     );
@@ -150,7 +168,7 @@
       var q = normalize(state.q.trim());
       var list = products.filter(function (p) {
         if (state.cat !== "toate" && p.category !== state.cat) return false;
-        if (q && normalize(p.name + " " + p.desc + " " + p.unit).indexOf(q) === -1) return false;
+        if (q && normalize(p.name + " " + p.desc + " " + productUnits(p)).indexOf(q) === -1) return false;
         return true;
       });
       grid.innerHTML = list.map(productCard).join("");
@@ -179,23 +197,65 @@
       if (!trigger) return;
       var p = products.find(function (x) { return x.id === trigger.getAttribute("data-open"); });
       if (!p) return;
-      var order = orderLink(p);
+      var sel = { variant: p.variants ? p.variants[0] : null, grind: p.grinds ? p.grinds[0] : "" };
+      var variantChips = p.variants && p.variants.length > 1
+        ? '<div class="option-group"><p class="option-label">Gramaj</p><div class="chips" data-variants>' +
+          p.variants.map(function (v, i) {
+            return '<button type="button" class="chip" data-variant="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(v.unit) + "</button>";
+          }).join("") + "</div></div>"
+        : "";
+      var grindSelect = p.grinds
+        ? '<div class="option-group"><label class="option-label" for="grind-select">Formă</label>' +
+          '<select id="grind-select" class="select">' +
+          p.grinds.map(function (g) { return "<option>" + esc(g) + "</option>"; }).join("") +
+          "</select></div>"
+        : "";
       content.innerHTML =
         '<div class="dialog-media">' + productImage(p) + "</div>" +
         '<div class="dialog-info">' +
         '<p class="product-cat">' + esc(cats[p.category] || "") + "</p>" +
         '<h2 id="product-dialog-title">' + esc(p.name) + "</h2>" +
-        '<p class="product-unit">' + esc(p.unit) + "</p>" +
+        '<p class="product-unit" data-unit></p>' +
         "<p>" + esc(p.desc) + "</p>" +
-        '<p class="price price-lg">' + formatPrice(p.price) + "</p>" +
+        variantChips + grindSelect +
+        '<p class="price price-lg" data-price></p>' +
         (p.available === false
           ? '<p class="notice">Produsul nu este momentan în stoc. Scrie-ne și te anunțăm când revine.</p>'
           : "") +
         '<div class="dialog-actions">' +
-        '<a class="btn" href="' + esc(order.href) + '" target="_blank" rel="noopener">' + order.label + "</a>" +
+        '<a class="btn" data-order target="_blank" rel="noopener"></a>' +
         "</div>" +
         '<p class="fine">Plata se face la livrare sau prin transfer bancar, după confirmarea comenzii.</p>' +
         "</div>";
+
+      function update() {
+        var order = orderLink(p, sel.variant, sel.grind);
+        content.querySelector("[data-unit]").textContent = sel.variant ? sel.variant.unit : p.unit;
+        content.querySelector("[data-price]").textContent = formatPrice(sel.variant ? variantPrice(sel.variant, sel.grind) : p.price);
+        var link = content.querySelector("[data-order]");
+        link.href = order.href;
+        link.textContent = order.label;
+      }
+      var chipBox = content.querySelector("[data-variants]");
+      if (chipBox) {
+        chipBox.addEventListener("click", function (ev) {
+          var btn = ev.target.closest("[data-variant]");
+          if (!btn) return;
+          sel.variant = p.variants[+btn.getAttribute("data-variant")];
+          chipBox.querySelectorAll(".chip").forEach(function (c) {
+            c.setAttribute("aria-pressed", c === btn ? "true" : "false");
+          });
+          update();
+        });
+      }
+      var grindEl = content.querySelector("#grind-select");
+      if (grindEl) {
+        grindEl.addEventListener("change", function () {
+          sel.grind = grindEl.value;
+          update();
+        });
+      }
+      update();
       if (typeof dialog.showModal === "function") dialog.showModal();
       else dialog.setAttribute("open", "");
     });

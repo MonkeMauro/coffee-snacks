@@ -1701,3 +1701,15 @@ textarea {
   white-space: nowrap;
   border: 0;
 }
+
+/* ---------- Opțiuni produs (gramaj / măcinătură) ---------- */
+.option-group {
+  margin: 0 0 14px;
+}
+
+.option-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin: 0 0 6px;
+}
