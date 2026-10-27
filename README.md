@@ -54,6 +54,6 @@ python3 -m http.server 8000
 
 ## Înainte de lansare
 
-- [ ] Completează WhatsApp-ul, emailul și Nr. Reg. Com. în `config.js`
+- [ ] Completează emailul și Nr. Reg. Com. în `config.js`
 - [ ] Înlocuiește produsele exemplu din `products.js` cu produsele reale
 - [ ] Adaugă linkurile reale de Facebook / Instagram

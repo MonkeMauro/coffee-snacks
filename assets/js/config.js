@@ -11,7 +11,7 @@ window.SITE_CONFIG = {
   regCom: "",
 
   // Număr WhatsApp doar cu cifre, cu prefix de țară (fără + sau spații)
-  whatsapp: "40700000000",
+  whatsapp: "40757173566",
   email: "contact@exemplu.ro",
 
   // Locația proprie, deschisă non-stop
