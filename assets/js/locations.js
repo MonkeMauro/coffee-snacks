@@ -34,8 +34,8 @@ window.LOCATIONS = [
     type: "Aparat vending",
     products: ["cafea", "irish", "ciocolata"],
     hours: "În programul magazinului",
-    lat: 47.1872,
-    lng: 25.7642,
+    lat: 47.17889,
+    lng: 25.78861,
   },
   {
     name: "Simos Broșteni",
