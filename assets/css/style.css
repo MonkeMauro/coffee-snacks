@@ -1942,29 +1942,14 @@ textarea {
   margin-top: 32px;
 }
 
-.site-footer .anpc-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: #fff;
-  color: #1c3f94;
-  font-size: 0.72rem;
-  line-height: 1.2;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+.footer-badges img {
+  display: block;
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
 }
 
-.site-footer .anpc-badge strong {
-  font-size: 1.1rem;
-  letter-spacing: 0.06em;
-  padding-right: 10px;
-  border-right: 2px solid #f2c200;
-}
-
-.site-footer .anpc-badge:hover {
-  color: #1c3f94;
+.footer-badges a:hover img {
   box-shadow: 0 0 0 2px var(--lime);
 }
 
