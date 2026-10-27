@@ -24,6 +24,8 @@ window.SITE_CONFIG = {
     // Coordonatele exacte ale intrării (vezi README pentru cum le iei din Google Maps)
     lat: 47.1783,
     lng: 25.78861,
+    // Link Google Maps folosit la butoanele „Indicații rutiere”
+    mapsUrl: "https://maps.app.goo.gl/9YKh9P8rPN1No68w9",
   },
 
   social: {

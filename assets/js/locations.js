@@ -10,6 +10,7 @@
  *   hours    – program de acces
  *   lat, lng – coordonate pentru hartă (în Google Maps: click dreapta pe locul exact
  *              → copiezi cele două numere).
+ *   mapsUrl  – link Google Maps pentru „Indicații rutiere” (opțional; altfel se folosesc lat/lng)
  *   own      – true pentru locația proprie non-stop (apare evidențiată)
  *   soon     – true dacă locația nu e încă deschisă
  */
@@ -24,6 +25,7 @@ window.LOCATIONS = [
     hours: "Non-stop, 24/7",
     lat: 47.1783,
     lng: 25.78861,
+    mapsUrl: "https://maps.app.goo.gl/9YKh9P8rPN1No68w9",
     own: true,
   },
   {

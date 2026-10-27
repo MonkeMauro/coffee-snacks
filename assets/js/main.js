@@ -29,6 +29,7 @@
   }
 
   function directionsUrl(loc) {
+    if (loc.mapsUrl) return loc.mapsUrl;
     var dest = loc.lat != null ? loc.lat + "," + loc.lng : loc.address;
     return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(dest);
   }
