@@ -786,9 +786,17 @@ p {
 }
 
 .product-media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+/* Pozele cu pungile au fundal alb: le afișăm întregi, pe alb */
+.product-media:has(img),
+.dialog-media:has(img) {
+  background: #fff;
 }
 
 .placeholder {
@@ -936,7 +944,8 @@ p {
 .dialog-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-height: 520px;
+  object-fit: contain;
 }
 
 .dialog-info {
