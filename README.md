@@ -54,6 +54,6 @@ python3 -m http.server 8000
 
 ## Înainte de lansare
 
-- [ ] Completează telefonul, WhatsApp-ul, emailul și datele firmei în `config.js`
+- [ ] Completează telefonul, WhatsApp-ul, emailul și Nr. Reg. Com. în `config.js`
 - [ ] Înlocuiește produsele exemplu din `products.js` cu produsele reale
 - [ ] Adaugă linkurile reale de Facebook / Instagram

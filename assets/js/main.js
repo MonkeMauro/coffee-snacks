@@ -39,6 +39,9 @@
       var val = get(cfg, el.getAttribute("data-config"));
       if (val != null) el.textContent = val;
     });
+    document.querySelectorAll("[data-if-config]").forEach(function (el) {
+      if (!get(cfg, el.getAttribute("data-if-config"))) el.hidden = true;
+    });
     document.querySelectorAll("[data-href]").forEach(function (el) {
       var kind = el.getAttribute("data-href");
       if (kind === "phone") el.href = "tel:" + String(cfg.phone).replace(/\s+/g, "");

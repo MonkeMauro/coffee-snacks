@@ -5,9 +5,10 @@
 window.SITE_CONFIG = {
   brand: "Coffee & Snacks",
   tagline: "Self Service Station",
-  companyName: "Coffee & Snacks SRL",
-  cui: "RO00000000",
-  regCom: "J00/0000/2026",
+  companyName: "Viral 4 Hype SRL",
+  cui: "RO44420073",
+  // Nr. Registrul Comerțului (ex. "J27/123/2021"); gol = nu se afișează
+  regCom: "",
 
   phone: "+40 700 000 000",
   // Număr WhatsApp doar cu cifre, cu prefix de țară (fără + sau spații)
