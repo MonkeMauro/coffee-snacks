@@ -17,7 +17,7 @@ window.SITE_CONFIG = {
 
   // Număr WhatsApp doar cu cifre, cu prefix de țară (fără + sau spații)
   whatsapp: "40757173566",
-  email: "contact@exemplu.ro",
+  email: "contact@viral4hype.com",
 
   // Locația proprie, deschisă non-stop
   shop: {

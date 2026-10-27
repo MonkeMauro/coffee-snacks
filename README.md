@@ -91,7 +91,7 @@ python3 -m http.server 8000
 
 ## Înainte de lansare
 
-- [ ] Completează în `config.js`: emailul real, Nr. Reg. Com., sediul social, IBAN-ul, datele de livrare
+- [ ] Completează în `config.js`: Nr. Reg. Com., sediul social, IBAN-ul, datele de livrare
 - [ ] Configurează EmailJS pentru emailul de confirmare (vezi mai sus)
 - [ ] Activează autentificarea în doi pași (2FA) pe contul GitHub care are acces la repo
 - [ ] Verifică prețurile Fresso din `products.js` (coffeepoint.ro din 27.10.2026 + 35% specialitate / + 25% boabe 1 kg)
