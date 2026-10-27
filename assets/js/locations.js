@@ -45,7 +45,7 @@ window.LOCATIONS = [
     type: "Aparat vending",
     products: ["cafea", "irish", "ciocolata"],
     hours: "În programul magazinului",
-    lat: 47.2367,
-    lng: 25.6975,
+    lat: 47.239972,
+    lng: 25.7001,
   },
 ];
