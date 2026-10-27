@@ -1713,3 +1713,13 @@ textarea {
   font-size: 0.92rem;
   margin: 0 0 6px;
 }
+
+.chips-sm {
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.chips-sm .chip {
+  padding: 4px 12px;
+  font-size: 0.85rem;
+}

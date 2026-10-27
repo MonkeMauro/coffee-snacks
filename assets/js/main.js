@@ -100,10 +100,7 @@
   }
 
   function cardPrice(p) {
-    if (!p.variants) return formatPrice(p.price);
-    var prices = p.variants.map(function (v) { return v.price; });
-    var min = Math.min.apply(null, prices);
-    return (prices.length > 1 ? "de la " : "") + formatPrice(min);
+    return formatPrice(p.variants ? p.variants[0].price : p.price);
   }
 
   function orderLink(p, variant, grind) {
@@ -133,8 +130,13 @@
       '<div class="product-body">' +
       '<p class="product-cat">' + esc(window.PRODUCT_CATEGORIES[p.category] || "") + "</p>" +
       '<h3><button type="button" class="link-btn" data-open="' + esc(p.id) + '">' + esc(p.name) + "</button></h3>" +
-      '<p class="product-unit">' + esc(productUnits(p)) + "</p>" +
-      '<div class="product-foot"><span class="price">' + cardPrice(p) + "</span>" +
+      (p.variants && p.variants.length > 1
+        ? '<div class="chips chips-sm" role="group" aria-label="Gramaj">' +
+          p.variants.map(function (v, i) {
+            return '<button type="button" class="chip" data-card-variant="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(v.unit) + "</button>";
+          }).join("") + "</div>"
+        : '<p class="product-unit">' + esc(productUnits(p)) + "</p>") +
+      '<div class="product-foot"><span class="price" data-card-price>' + cardPrice(p) + "</span>" +
       '<button type="button" class="btn btn-small" data-open="' + esc(p.id) + '">Detalii</button></div>' +
       "</div></article>"
     );
@@ -193,15 +195,29 @@
     var dialog = document.getElementById("product-dialog");
     var content = document.getElementById("product-dialog-content");
     grid.addEventListener("click", function (e) {
+      // Gramaj ales direct pe card: schimbă prețul afișat
+      var pick = e.target.closest("[data-card-variant]");
+      if (pick) {
+        var card = pick.closest(".product-card");
+        var cp = products.find(function (x) { return x.id === card.getAttribute("data-id"); });
+        var i = +pick.getAttribute("data-card-variant");
+        card.setAttribute("data-variant", i);
+        card.querySelectorAll("[data-card-variant]").forEach(function (c) {
+          c.setAttribute("aria-pressed", c === pick ? "true" : "false");
+        });
+        card.querySelector("[data-card-price]").textContent = formatPrice(cp.variants[i].price);
+        return;
+      }
       var trigger = e.target.closest("[data-open]");
       if (!trigger) return;
       var p = products.find(function (x) { return x.id === trigger.getAttribute("data-open"); });
       if (!p) return;
-      var sel = { variant: p.variants ? p.variants[0] : null, grind: p.grinds ? p.grinds[0] : "" };
+      var startIdx = +(trigger.closest(".product-card").getAttribute("data-variant") || 0);
+      var sel = { variant: p.variants ? p.variants[startIdx] : null, grind: p.grinds ? p.grinds[0] : "" };
       var variantChips = p.variants && p.variants.length > 1
         ? '<div class="option-group"><p class="option-label">Gramaj</p><div class="chips" data-variants>' +
           p.variants.map(function (v, i) {
-            return '<button type="button" class="chip" data-variant="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(v.unit) + "</button>";
+            return '<button type="button" class="chip" data-variant="' + i + '" aria-pressed="' + (i === startIdx) + '">' + esc(v.unit) + "</button>";
           }).join("") + "</div></div>"
         : "";
       var grindSelect = p.grinds
