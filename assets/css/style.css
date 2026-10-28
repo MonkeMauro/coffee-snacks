@@ -913,9 +913,11 @@ p {
 }
 
 .dialog-close {
-  position: absolute;
+  /* rămâne vizibil când fereastra se derulează pe telefon */
+  position: sticky;
   top: 12px;
-  right: 12px;
+  display: block;
+  margin: 12px 12px -50px auto;
   width: 38px;
   height: 38px;
   border-radius: 50%;
@@ -2113,4 +2115,26 @@ textarea {
   font-size: 0.88rem;
   color: var(--muted);
   margin-top: 8px;
+}
+
+/* ---------- Ferestre: pagina din spate nu se mai derulează ---------- */
+html.modal-open,
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+.product-dialog,
+.cart-dialog {
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.cart-dialog .dialog-close {
+  top: -20px;
+  margin: -20px -14px -38px auto;
+}
+
+.cart-item .qty {
+  justify-self: start;
 }

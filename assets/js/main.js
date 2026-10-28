@@ -821,8 +821,18 @@
     });
   }
 
+  // Cât e deschisă o fereastră (produs, coș), pagina din spate stă pe loc
+  function initDialogs() {
+    document.querySelectorAll("dialog").forEach(function (d) {
+      new MutationObserver(function () {
+        document.documentElement.classList.toggle("modal-open", !!document.querySelector("dialog[open]"));
+      }).observe(d, { attributes: true, attributeFilter: ["open"] });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     applyConfig();
+    initDialogs();
     initNav();
     initShop();
     initLocations();
